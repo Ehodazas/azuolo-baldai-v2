@@ -434,20 +434,36 @@ figcaption, .fig-tag {
 .finishx__grid { display: grid; gap: 12px; }
 .fpanel { display: grid; align-content: start; background: var(--paper-2); }
 .fpanel--lacquer { background: var(--char); color: var(--paper); }
-.fpanel__img { position: relative; margin: 0; aspect-ratio: 16 / 7; overflow: hidden; }
-.fpanel__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-/* kompiuteryje vaizdas ~17 % žemesnis (16:7 → 11:4), kad skydeliuose dominuotų palyginimas */
-@media (min-width: 900px) { .fpanel__img { aspect-ratio: 11 / 4; } }
+/* žema juosta (telefone 8:3, kompiuteryje 13:4), kad palyginimas tilptų viename ekrane */
+.fpanel__img { position: relative; margin: 0; aspect-ratio: 8 / 3; overflow: hidden; }
+.fpanel__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+@media (min-width: 900px) { .fpanel__img { aspect-ratio: 13 / 4; } }
+/* lako kortelė: tas pats vaizdas, o blizgesys pavaizduotas grafiškai (įstrižas atspindys ir šviesesnis viršus) */
+.fpanel__img--gloss::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, .16) 34%, rgba(255, 255, 255, .58) 44%, rgba(255, 255, 255, .16) 52%, rgba(255, 255, 255, 0) 62%, rgba(255, 255, 255, .12) 70%, rgba(255, 255, 255, 0) 76%),
+    linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, 0) 60%);
+}
+.fpanel__img figcaption { z-index: 2; }
 /* švelnus priartėjimas tik pelei ir tik jei lankytojas neprašė mažinti judesio */
 @media (hover: hover) and (min-width: 900px) and (prefers-reduced-motion: no-preference) {
   .fpanel__img img { transition: transform .35s var(--ease-out); }
   .fpanel:hover .fpanel__img img { transform: scale(1.03); }
 }
 .finishx__imgnote { margin-top: 14px; font-size: .8rem; color: var(--muted); }
-.finishx__guide { display: grid; gap: 10px; margin-top: clamp(28px, 4vw, 44px); padding-top: 22px; border-top: 1px solid var(--ink); }
+.finishx__guide { display: grid; gap: 14px; margin-top: clamp(28px, 4vw, 40px); padding-top: 22px; border-top: 1px solid var(--ink); }
 .finishx__guide-h { font-family: var(--serif); font-style: italic; font-size: 1.35rem; line-height: 1.2; color: var(--oak-deep); }
-.finishx__guide p { font-family: var(--serif); font-size: clamp(1.08rem, 1rem + .35vw, 1.28rem); line-height: 1.55; color: var(--ink-2); max-width: 62ch; }
-@media (min-width: 900px) { .finishx__guide { grid-template-columns: 220px minmax(0, 1fr); column-gap: 40px; } .finishx__guide-h { padding-top: 3px; } }
+/* rekomendacijos sulygiuotos po atitinkamomis kortelėmis */
+.finishx__picks { display: grid; gap: 12px; }
+.finishx__picks li { font-family: var(--serif); font-size: clamp(1.08rem, 1rem + .35vw, 1.25rem); line-height: 1.5; color: var(--ink-2); padding-left: 16px; border-left: 2px solid var(--oak); }
+.finishx__picks li + li { border-left-color: var(--char); }
+.finishx__picks strong { font-weight: 500; color: var(--ink); }
+.finishx__guide-note { font-size: .9rem; color: var(--muted); }
+@media (min-width: 900px) {
+  .finishx__picks { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  .finishx__picks li { margin: 0 24px; }
+}
 .fpanel__name { font-family: var(--serif); font-size: clamp(2rem, 1.6rem + 1.6vw, 2.8rem); line-height: 1; padding: 26px 24px 18px; }
 .fpanel__dl { margin: 0 24px 26px; border-top: 1px solid currentColor; }
 .fpanel__dl div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
