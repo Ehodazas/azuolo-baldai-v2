@@ -146,6 +146,9 @@
     data.set("form_type", form.dataset.form || "full");
     data.set("elapsed_ms", String(Date.now() - loadedAt));
     data.set("page", location.pathname + location.search);
+    /* užklausos krepšelis siunčiamas tame pačiame laiške (laukas „cart“) */
+    const basketText = form.id === "form" && AB.basket ? AB.basket.payload() : "";
+    if (basketText) data.set("cart", basketText); else data.delete("cart");
 
     setSending(form, true);
     const ctrl = new AbortController();
@@ -157,7 +160,10 @@
       if (res.ok && body && body.ok === true) {
         form.reset();
         const fi = form.querySelector('input[type="file"]'); if (fi) renderFileList(fi);
-        if (form.id === "form") { AB.forms.syncVisit(); AB.forms.syncDetails(); }
+        if (form.id === "form") {
+          AB.forms.syncVisit(); AB.forms.syncDetails();
+          if (basketText && AB.basket) AB.basket.clear(); /* krepšelis išvalomas tik po patvirtinto išsiuntimo */
+        }
         $$(".is-error", form).forEach((w) => w.classList.remove("is-error"));
         const ok = $(".form__ok", form);
         ok.hidden = false;
@@ -207,16 +213,34 @@
   };
 
   /* ---------- Tikslesnis pasirinkimas pagal gaminį ----------
-     Reikšmės („virtuve:fasadai“) sutampa su sąrašu api/uzklausa.php.
-     Pakeitus gaminį ankstesni pažymėjimai išvalomi, kad į užklausą nepatektų netinkami. */
-  const DETAILS = {
-    virtuve: [["visa", "Visa virtuvė"], ["fasadai", "Tik fasadai"], ["stalvirsis", "Stalviršis"], ["sala", "Virtuvės sala"]],
-    spinta: [["imontuota", "Įmontuota spinta"], ["stumdoma", "Spinta su stumdomomis durimis"], ["drabuzine", "Drabužinė"], ["prieskambaris", "Prieškambario baldai"]],
-    stalai: [["valgomojo", "Valgomojo stalas"], ["istraukiamas", "Ištraukiamas stalas"], ["kavos", "Kavos staliukas"], ["rasomasis", "Rašomasis stalas"], ["kedes", "Kėdės"], ["suoliukas", "Suoliukas"]],
-    miegamasis: [["lova", "Lova"], ["lova-deze", "Lova su patalynės dėže"], ["naktine", "Naktinė spintelė"], ["komoda", "Komoda"]],
-    svetaine: [["lentynos", "Lentynos ar knygų siena"], ["tv", "TV baldas"], ["staliukas", "Kavos staliukas"], ["indauja", "Komoda ar indauja"]],
-    restauravimas: [["stalas", "Stalas"], ["kedes", "Kėdės"], ["spinta", "Spinta ar komoda"], ["kita", "Kitas baldas"]],
+     Tipai imami iš bendrų duomenų (js/catalog.js); reikšmės („virtuve:fasadai“)
+     sutampa su sąrašu api/uzklausa.php. Pakeitus gaminį ankstesni pažymėjimai išvalomi. */
+  const DETAILS = {};
+  ((window.AB_CATALOG && window.AB_CATALOG.categories) || []).forEach((c) => { DETAILS[c.formType] = c.subtypes; });
+
+  /* ---------- Užklausos krepšelio santrauka formoje ---------- */
+  const bsum = $("#basketSum");
+  AB.forms.syncBasket = () => {
+    if (!bsum || !AB.basket) return;
+    const items = AB.basket.items();
+    bsum.hidden = items.length === 0;
+    if (!items.length) { bsum.innerHTML = ""; return; }
+    const n = items.length;
+    const on = AB.basket.included();
+    bsum.innerHTML =
+      `<div class="bsum__head"><p class="bsum__title">Jūsų užklausoje: ${n} ${AB.plural(n, "gaminys", "gaminiai", "gaminių")}</p>` +
+      `<button type="button" class="bsum__edit" data-open-drawer="basket">Redaguoti</button></div>` +
+      `<ol class="bsum__list">${items.map((it) => `<li>${AB.esc(AB.basket.summaryText(it))}</li>`).join("")}</ol>` +
+      `<label class="check bsum__inc"><input type="checkbox" id="f-basket-inc"${on ? " checked" : ""}><span>Siųsti krepšelį kartu su šia užklausa</span></label>`;
+    $("#f-basket-inc", bsum).addEventListener("change", (e) => AB.basket.setIncluded(e.target.checked));
+    /* jei gaminys formoje dar nepasirinktas, parenkamas pirmas iš krepšelio (laiško temai) */
+    if (on && typeSel && typeSel.value === "kita") {
+      const first = window.AB_CATALOG && window.AB_CATALOG.byId(items[0].id);
+      if (first) AB.forms.setType(first.formType);
+    }
   };
+  document.addEventListener("ab:basket", () => AB.forms.syncBasket());
+  setTimeout(() => AB.forms.syncBasket(), 0); /* inquiry.js įkeliamas po šio failo */
   const detailsBox = $("#details");
   const detailsOpts = $("#detailsOpts");
   const typeSel = full && full.elements.type;

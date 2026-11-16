@@ -18,6 +18,11 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20Z" fill="var(--heart-fill, none)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8h13l-1 12h-11l-1-12Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
 </svg>
 
 <header class="hdr" id="hdr">
@@ -88,7 +93,7 @@
       <p>Duomenis gauname tik tada, kai juos patys pateikiate per užklausos formą:</p>
       <ul>
         <li>privaloma: vardas, telefono numeris ir sutikimo žymė;</li>
-        <li>neprivaloma: el. pašto adresas, gaminio tipas ir tai, kas tiksliau domina (pvz., „Virtuvės sala“), biudžeto intervalas, žinutė, pridėti failai, pageidaujamas matavimo ar vizito tipas, data ir laikas.</li>
+        <li>neprivaloma: el. pašto adresas, gaminio tipas ir tai, kas tiksliau domina (pvz., „Virtuvės sala“), biudžeto intervalas, žinutė, pridėti failai, pageidaujamas matavimo ar vizito tipas, data ir laikas, užklausos krepšelio turinys.</li>
       </ul>
       <p>Kartu su užklausa perduodamas puslapio adresas ir formos pildymo trukmė (apsaugai nuo automatinių užklausų). Serveris apdoroja jūsų IP adresą, kad apribotų užklausų skaičių. Tam laikinai saugoma tik užšifruota (maišos funkcija apdorota) IP adreso reikšmė ir užklausų laikai.</p>
 
@@ -117,7 +122,13 @@
       </table>
 
       <h2 id="slapukai">6. Slapukai</h2>
-      <p>Svetainė savo slapukų nenaudoja, lankomumo statistikos nerenka ir naršyklės saugykloje nieko neįrašo. Todėl sutikimo lango nerodome.</p>
+      <p>Svetainė savo slapukų nenaudoja ir lankomumo statistikos nerenka. Todėl sutikimo lango nerodome.</p>
+      <p>Jei patys pasinaudojate šiomis funkcijomis, jūsų naršyklės saugykloje (<code>localStorage</code>) įrašoma:</p>
+      <ul>
+        <li><code>ab2-inquiry</code> – į užklausą įtraukti gaminiai ir jūsų patikslinimai (matmenys, mediena, pastabos), kad jie išliktų perkrovus puslapį;</li>
+        <li><code>ab2-favorites</code> – įsiminti gaminiai.</li>
+      </ul>
+      <p>Šie duomenys lieka jūsų įrenginyje ir mums neperduodami, kol patys nepateikiate užklausos. Juos ištrinsite išvalę užklausą, pašalinę įsimintus gaminius arba išvalę naršyklės svetainių duomenis.</p>
       <p>Vienintelis išorinis turinys, galintis įrašyti slapukus, yra „Google Maps“ žemėlapis. Jis įkeliamas tik tada, kai patys paspaudžiate „Rodyti žemėlapį“. Tam žemėlapiui taikomos „Google“ taisyklės.</p>
 
       <h2 id="saugojimas">7. Saugojimo terminai</h2>
@@ -169,6 +180,9 @@
   </div>
 </footer>
 
+<script src="config.js"></script>
 <script src="js/app.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/inquiry.js"></script>
 </body>
 </html>

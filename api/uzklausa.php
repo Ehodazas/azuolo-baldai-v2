@@ -175,7 +175,7 @@ if ($formType === 'full') $lines[] = 'Biudžetas: ' . ($budgets[$budget] ?? '—
 if ($project !== '') $lines[] = 'Domina projektas: ' . $project;
 if ($favs !== '') $lines[] = 'Mėgstami projektai: ' . $favs;
 if ($formType === 'full' && $visitType !== '') $lines[] = 'Pageidauja: ' . $visitTypes[$visitType] . ', ' . $visitDate . ', ' . $visitTimes[$visitTime] . ' (patvirtinti telefonu)';
-if ($cart !== '') { $lines[] = ''; $lines[] = 'Užsakymo krepšelis (orientacinės kainos):'; $lines[] = $cart; }
+if ($cart !== '') { $lines[] = ''; $lines[] = 'Užklausos krepšelis (gaminiai, dėl kurių prašoma pasiūlymo):'; $lines[] = $cart; }
 if ($message !== '') { $lines[] = ''; $lines[] = 'Žinutė:'; $lines[] = $message; }
 $lines[] = '';
 $lines[] = 'Pridėti failai: ' . (count($attachments) ?: 'nėra');

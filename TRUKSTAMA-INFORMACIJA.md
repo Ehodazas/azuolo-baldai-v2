@@ -27,7 +27,7 @@ Kai informacija bus, ją galima įrašyti į svetainę.
 5. **Darbo sąlygos:** ar matavimas mokamas, ar yra avansas, kokie įprasti terminai, kur važiuojate
    (Kaunas, Vilnius, visa Lietuva), kokia garantija. Kol tai nepatvirtinta, svetainėje šių pažadų nėra.
 6. **Tikri klientų atsiliepimai** su leidimu juos skelbti arba nuoroda į „Google“ atsiliepimus.
-7. **Socialinių tinklų paskyros**, jei jos yra.
+7. **Socialinių tinklų paskyros** (Facebook, Instagram), jei jos yra – įrašyti `config.js` (`social`).
 
 ## Kas pašalinta iš 1 versijos ir kodėl
 
@@ -44,3 +44,9 @@ Kai informacija bus, ją galima įrašyti į svetainę.
 | Mėgstami, palyginimas, paieška | Mažai naudos vieno puslapio svetainėje |
 | Slapukų juosta | Svetainė savo slapukų neturi, žemėlapis įkeliamas tik paspaudus |
 | GSAP biblioteka | Nebereikalinga, judesys padarytas CSS priemonėmis |
+
+## Užklausos krepšeliui ir kainoms
+
+- **Patvirtintos orientacinės kainos** pagal kategoriją (nuo kiek ir už ką: vienetą, metrą). Įrašomos `js/catalog.js` su `verified: true`.
+- **Tikri atlikti darbai** – kai jų bus, juos galima įtraukti į tuos pačius duomenis, kad juos būtų galima įsiminti ir pridėti prie užklausos.
+- **Veikiantis siuntimas** (PHP talpinimas ir gavėjo el. paštas) – be jo krepšelis ir forma nieko neišsiunčia.

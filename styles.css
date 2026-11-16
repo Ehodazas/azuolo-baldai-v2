@@ -793,9 +793,179 @@ figcaption, .fig-tag {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
 
+/* =========================================================
+   Užklausos krepšelis, įsiminti gaminiai, paieška
+   ========================================================= */
+
+/* Antraštės mygtukai */
+.hdr__tools { display: flex; align-items: center; gap: 2px; }
+.tool {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  min-width: 44px; min-height: 44px; padding: 0 10px; justify-content: center;
+  background: transparent; border: 0; color: var(--ink); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: color var(--t-quick) ease-out;
+}
+.tool svg { width: 22px; height: 22px; }
+.tool:hover { color: var(--oak-deep); }
+.tool__label { display: none; font-size: .88rem; }
+.tool__n {
+  position: absolute; top: 5px; right: 3px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
+  background: var(--ink); color: var(--paper); font-size: .68rem; font-weight: 600; line-height: 18px; text-align: center;
+}
+.tool__n:empty { display: none; }
+@media (min-width: 1400px) {
+  .tool__label { display: inline; }
+  .tool__n { position: static; }
+}
+
+/* Gaminių eilutės: veiksmai */
+.prow { display: grid; grid-template-columns: minmax(0, 1fr); }
+.prow[hidden] { display: none; }
+.prow__actions { display: flex; align-items: center; gap: 6px; padding: 0 0 18px 50px; margin-top: -6px; }
+.fav {
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  background: transparent; border: 1px solid var(--paper-3); color: var(--ink-2); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--t-quick) ease-out, color var(--t-quick) ease-out;
+}
+.fav svg { width: 20px; height: 20px; transition: transform .25s var(--ease-out); }
+.fav:hover { border-color: var(--ink); color: var(--ink); }
+.fav.is-on { --heart-fill: var(--oak); color: var(--oak-deep); border-color: var(--oak); }
+.fav:active svg { transform: scale(.85); }
+.addq {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  background: transparent; border: 1px solid var(--paper-3); color: var(--ink); cursor: pointer; font-size: .88rem; font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-quick) ease-out, color var(--t-quick) ease-out, border-color var(--t-quick) ease-out, transform .15s var(--ease-out);
+}
+.addq svg { width: 16px; height: 16px; }
+.addq:hover { border-color: var(--ink); }
+.addq:active { transform: scale(.97); }
+.addq.is-in { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.prow__price { display: block; margin-top: 4px; font-size: .86rem; font-weight: 600; color: var(--oak-deep); }
+@media (min-width: 900px) { .prow__actions { padding: 0 0 22px 72px; margin-top: -10px; } }
+
+/* Paieška tarp gaminių */
+.psearch { position: relative; display: flex; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--ink); }
+.psearch__i { position: absolute; left: 0; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+.psearch input {
+  flex: 1; min-width: 0; min-height: 52px; padding: 0 44px 0 32px; border: 0; background: transparent;
+  font-family: var(--serif); font-size: 1.2rem; color: var(--ink); -webkit-appearance: none; appearance: none;
+}
+.psearch input::-webkit-search-cancel-button { display: none; }
+.psearch input::placeholder { color: #8a8174; }
+.psearch input:focus { outline: none; }
+.psearch:focus-within { border-bottom-color: var(--oak); box-shadow: 0 1px 0 var(--oak); }
+.psearch__clear { position: absolute; right: 0; display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--ink-2); }
+.psearch__clear[hidden] { display: none; }
+.psearch__clear svg { width: 18px; height: 18px; }
+.psearch__status { min-height: 1.4em; margin-bottom: 4px; font-size: .82rem; color: var(--muted); }
+.psearch__empty { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); display: grid; gap: 6px; }
+.psearch__empty[hidden] { display: none; }
+.products__col { min-width: 0; }
+
+/* Šoninis skydelis */
+.drawer {
+  margin: 0 0 0 auto; width: min(440px, 100%); max-width: none; height: 100%; max-height: none; padding: 0;
+  border: 0; background: var(--paper); color: var(--ink);
+  display: none; flex-direction: column;
+}
+.drawer[open] { display: flex; }
+.drawer::backdrop { background: rgba(29, 27, 24, .45); }
+@media (prefers-reduced-motion: no-preference) {
+  .drawer[open] { animation: drawerIn .32s var(--ease-out); }
+  @keyframes drawerIn { from { transform: translateX(24px); opacity: 0; } }
+}
+.drawer__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.drawer__title { font-family: var(--serif); font-size: 1.6rem; line-height: 1.1; }
+.drawer__close { border-color: var(--paper-3); }
+.drawer__switch { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+.drawer__switch button {
+  min-height: 48px; background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer;
+  font-size: .9rem; color: var(--muted); transition: color var(--t-quick), border-color var(--t-quick);
+}
+.drawer__switch button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--oak); font-weight: 600; }
+.drawer__body { flex: 1; overflow-y: auto; padding: 18px 20px; overscroll-behavior: contain; }
+.drawer__foot { display: grid; gap: 8px; padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--paper); }
+.drawer__foot:empty { display: none; }
+.drawer__lead { font-size: .86rem; color: var(--muted); margin-bottom: 14px; }
+.drawer__empty { display: grid; gap: 10px; padding: 12px 0; color: var(--ink-2); font-size: .95rem; }
+.drawer__empty-h { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); }
+.drawer__clear { justify-self: center; min-height: 40px; padding: 0 8px; background: none; border: 0; cursor: pointer; font-size: .86rem; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.drawer__clear:hover { color: var(--err); }
+
+.bitems { display: grid; border-top: 1px solid var(--ink); }
+.bitem { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.bitem__head { display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; gap: 12px; align-items: start; }
+.bitem__head img { width: 64px; height: 64px; object-fit: cover; background: var(--paper-2); }
+.bitem__t h3 { font-family: var(--serif); font-size: 1.2rem; line-height: 1.15; }
+.bitem__sum { margin-top: 4px; font-size: .84rem; color: var(--muted); line-height: 1.45; }
+.bitem__rm { display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--ink-2); }
+.bitem__rm:hover { color: var(--err); }
+.bitem__rm svg { width: 18px; height: 18px; }
+.bitem__acts { padding: 10px 0 0 76px; }
+.bitem__edit { margin-top: 10px; padding-left: 76px; }
+.bitem__edit summary {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; list-style: none;
+  font-size: .88rem; font-weight: 600; text-decoration: underline; text-underline-offset: 4px;
+}
+.bitem__edit summary::-webkit-details-marker { display: none; }
+.bitem__edit summary::after { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); transition: transform .2s; }
+.bitem__edit[open] summary::after { transform: rotate(-135deg) translateY(-1px); }
+.bitem__f { border: 0; padding: 0; margin: 8px 0 12px; min-width: 0; }
+.bitem__f legend { padding: 0; margin-bottom: 8px; font-size: .8rem; font-weight: 600; color: var(--ink-2); }
+.bitem__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bitem__full { grid-column: 1 / -1; }
+.bitem__grid .field input, .bitem__grid .field select, .bitem__grid .field textarea { min-height: 44px; padding: 9px 11px; font-size: .95rem; }
+.bitem__grid .field select { padding-right: 34px; }
+.bitem__grid .field textarea { min-height: 64px; }
+@media (max-width: 400px) {
+  .bitem__edit, .bitem__acts { padding-left: 0; }
+  .bitem__grid { grid-template-columns: 1fr; }
+}
+
+/* Krepšelio santrauka formoje */
+.bsum { margin: 0 0 22px; padding: 16px 18px; background: var(--paper-2); border-left: 3px solid var(--oak); display: grid; gap: 10px; }
+.bsum[hidden] { display: none; }
+.bsum__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.bsum__title { font-family: var(--serif); font-size: 1.2rem; }
+.bsum__edit { min-height: 40px; padding: 0 4px; background: none; border: 0; cursor: pointer; font-size: .88rem; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.bsum__list { padding-left: 20px; list-style: decimal; display: grid; gap: 4px; font-size: .9rem; color: var(--ink-2); }
+
+/* Trumpas pranešimas apie veiksmą */
+.toast {
+  position: fixed; left: 50%; bottom: calc(72px + env(safe-area-inset-bottom)); z-index: 60; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px; max-width: calc(100% - 32px); padding: 12px 16px;
+  background: var(--ink); color: var(--paper); font-size: .9rem; box-shadow: 0 10px 30px -18px rgba(0, 0, 0, .6);
+}
+.toast[hidden] { display: none; }
+.toast__btn { min-height: 36px; padding: 0 4px; background: none; border: 0; color: var(--oak-light); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+@media (min-width: 760px) { .toast { bottom: 24px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .toast.is-in { animation: toastIn .28s var(--ease-out); }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 8px); } }
+}
+
+/* Socialiniai tinklai poraštėje (rodomi tik su tikrais adresais) */
+.ftr__social { display: flex; gap: 6px; margin-top: 14px; }
+.ftr__social a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-light); color: var(--paper); background: none; padding: 0; transition: border-color var(--t-quick), color var(--t-quick); }
+.ftr__social a:hover { border-color: var(--oak-light); color: var(--oak-light); }
+.ftr__social svg { width: 20px; height: 20px; }
+
 @media print {
+  .hdr__tools, .prow__actions, .psearch, .toast, .drawer { display: none !important; }
   .rv, .rv > *, .rv .m__btn { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .step::before { transform: none !important; }
   .hdr, .mbar, .menu, .lb, .map, .form { display: none !important; }
   body { background: #fff; }
+}
+
+/* Siauri telefonai: logotipas, įsiminti, užklausa ir meniu turi tilpti vienoje eilutėje */
+.brand__name, .brand__sub { white-space: nowrap; }
+@media (max-width: 419px) {
+  .hdr__in { gap: 6px; }
+  .brand__name { font-size: 1.22rem; }
+  .brand__sub { font-size: .58rem; letter-spacing: .14em; }
+  .menu-btn { padding: 0 11px; }
+  .hdr__tools { gap: 0; }
 }

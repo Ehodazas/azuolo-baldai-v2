@@ -21,6 +21,24 @@
   document.documentElement.classList.add("js");
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
+  /* ---------- Socialiniai tinklai: rodomi tik įrašius tikrą adresą config.js ---------- */
+  const social = (window.AB_CONFIG && window.AB_CONFIG.social) || {};
+  const NETS = {
+    facebook: { name: "Facebook", host: /(^|\.)facebook\.com$/, icon: '<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8Z" fill="currentColor"/>' },
+    instagram: { name: "Instagram", host: /(^|\.)instagram\.com$/, icon: '<rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>' },
+  };
+  const valid = Object.entries(NETS).filter(([k, n]) => {
+    try { const u = new URL(social[k]); return u.protocol === "https:" && n.host.test(u.hostname); } catch { return false; }
+  });
+  const ftrBrand = $(".ftr__brand");
+  if (valid.length && ftrBrand) {
+    const ul = document.createElement("ul");
+    ul.className = "ftr__social";
+    ul.innerHTML = valid.map(([k, n]) =>
+      `<li><a href="${esc(social[k])}" target="_blank" rel="noopener noreferrer" aria-label="${n.name} (atsidaro naujame lange)"><svg viewBox="0 0 24 24" aria-hidden="true">${n.icon}</svg></a></li>`).join("");
+    ftrBrand.appendChild(ul);
+  }
+
   /* iOS Safari rodo :active būseną tik tada, kai yra touchstart klausytojas */
   document.addEventListener("touchstart", () => {}, { passive: true });
 

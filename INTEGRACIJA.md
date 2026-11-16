@@ -43,3 +43,32 @@ Pridėdami naują nuotrauką, sukurkite ir 800 px pločio kopiją su `-800` gale
 
 `powershell -ExecutionPolicy Bypass -File .claude/serve.ps1 -Root . -Port 5501` ir atidarykite http://localhost:5501.
 Šis serveris PHP nevykdo, todėl forma kompiuteryje visada rodys, kad siuntimas neprijungtas.
+
+## Užklausos krepšelis ir įsiminti gaminiai
+
+- Duomenys: `js/catalog.js` (6 gaminių kategorijos su pastoviais ID ir tipais). Iš čia imama paieška, įsiminti gaminiai, krepšelis ir formos tipai.
+  Serveryje tipų sąrašas pakartotas `api/uzklausa.php` (`$detailLabels`), nes serveris priima tik žinomas reikšmes – pridėjus tipą, įrašykite jį abiejose vietose.
+- Logika: `js/inquiry.js`. Krepšelis saugomas naršyklėje (`localStorage`, raktas `ab2-inquiry`, versija 1), įsiminti – `ab2-favorites`.
+  Sugadinti ar nebeegzistuojantys įrašai išmetami įkeliant.
+- Krepšelis nėra pirkimas. Jis siunčiamas su užklausos forma lauku `cart` (tekstu), laiške rodomas bloku „Užklausos krepšelis“.
+  Krepšelis išvalomas tik gavus patvirtintą serverio atsakymą `{"ok": true}`.
+
+## Orientacinės kainos
+
+Svetainėje kainų nėra, nes jos nepatvirtintos (V1 kainos buvo pavyzdinės). Kai įmonė patvirtins kainas, įrašykite jas `js/catalog.js`, pvz.:
+
+```js
+price: { from: 1200, unit: "vnt.", verified: true },
+```
+
+Kaina rodoma tik kai `verified: true`. Formulės skaičiuoklei nėra, todėl skaičiuoklės nedarykite, kol jos nepatvirtins įmonė.
+
+## Socialiniai tinklai
+
+`config.js` faile įrašykite tikrus adresus:
+
+```js
+social: { facebook: "https://www.facebook.com/...", instagram: "https://www.instagram.com/..." },
+```
+
+Ikonos poraštėje atsiras tik su galiojančiu `https://` adresu atitinkamame domene. Tušti laukai – jokių ikonų.

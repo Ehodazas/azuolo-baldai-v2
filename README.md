@@ -11,7 +11,9 @@ kainų, atsiliepimų, garantijų ar įmonės faktų. Ko trūksta, surašyta fail
 | `privatumas.html` | Privatumo politika (juodraštis) |
 | `404.html` | Puslapis „Nerasta“ |
 | `styles.css` | Visi stiliai |
-| `js/app.js` | Meniu, nuotraukų peržiūra, gaminio parinkimas formoje, žemėlapis |
+| `js/app.js` | Meniu, nuotraukų peržiūra, gaminio parinkimas formoje, žemėlapis, socialiniai tinklai |
+| `js/catalog.js` | Gaminių kategorijos ir tipai – vienas duomenų šaltinis |
+| `js/inquiry.js` | Užklausos krepšelis, įsiminti gaminiai, paieška tarp gaminių |
 | `js/forms.js` | Užklausos formos patikra ir siuntimas |
 | `config.js` | Formos serverio adresas |
 | `api/uzklausa.php` | Užklausų priėmimas ir siuntimas el. paštu |
