@@ -21,21 +21,29 @@
   document.documentElement.classList.add("js");
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
-  /* ---------- Antraštė ir mobilioji juosta ---------- */
+  /* iOS Safari rodo :active būseną tik tada, kai yra touchstart klausytojas */
+  document.addEventListener("touchstart", () => {}, { passive: true });
+
+  /* ---------- Antraštė ir mobilioji juosta (be scroll klausytojų) ---------- */
   const hdr = $("#hdr");
   const mbar = $("#mbar");
+  const hero = $(".hero");
   const contact = $("#kontaktai");
-  let contactVisible = false;
-  const onScroll = () => {
-    const y = window.scrollY;
-    hdr && hdr.classList.toggle("is-scrolled", y > 8);
-    mbar && mbar.classList.toggle("is-on", y > window.innerHeight * 0.7 && !contactVisible);
-  };
-  if (contact && "IntersectionObserver" in window) {
-    new IntersectionObserver(([e]) => { contactVisible = e.isIntersecting; onScroll(); }, { threshold: 0.05 }).observe(contact);
+  if ("IntersectionObserver" in window) {
+    if (hdr) {
+      const sentinel = document.createElement("div");
+      sentinel.setAttribute("aria-hidden", "true");
+      sentinel.style.cssText = "position:absolute;top:0;left:0;width:1px;height:8px;pointer-events:none;";
+      document.body.prepend(sentinel);
+      new IntersectionObserver(([e]) => hdr.classList.toggle("is-scrolled", !e.isIntersecting)).observe(sentinel);
+    }
+    if (mbar && hero) {
+      let heroIn = true, contactIn = false;
+      const sync = () => mbar.classList.toggle("is-on", !heroIn && !contactIn);
+      new IntersectionObserver(([e]) => { heroIn = e.isIntersecting; sync(); }, { rootMargin: "0px 0px -30% 0px" }).observe(hero);
+      contact && new IntersectionObserver(([e]) => { contactIn = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe(contact);
+    }
   }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
   /* ---------- Mobilusis meniu ---------- */
   const menu = $("#menu");
@@ -180,13 +188,50 @@
     });
   }
 
-  /* ---------- Švelnus atsiradimas slenkant ---------- */
+  /* ---------- Atsiradimas slenkant: tik proceso žingsniai ir mozaikos nuotraukos, po vieną kartą ----------
+     Kitas turinys sąmoningai nejuda. Elementai, kurie jau matomi įkėlus puslapį, nepaslepiami. */
   if (!reduceMotion() && "IntersectionObserver" in window) {
-    const els = $$(".shead, .gallery__head, .prow, .step, .species > div, .finish, .swatches, .prep, .form");
+    const els = $$(".step, .mosaic .m").filter((el) => el.getBoundingClientRect().top > window.innerHeight);
     els.forEach((el) => el.classList.add("rv"));
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px" });
+    }, { rootMargin: "0px 0px -12% 0px" });
     els.forEach((el) => io.observe(el));
   }
+
+  /* ---------- DUK: sklandus atidarymas ir uždarymas ----------
+     <details> išlaiko savo semantiką (ekrano skaitytuvai praneša „išskleista / suskleista“),
+     JavaScript tik animuoja aukštį. Be JS arba su „sumažintu judesiu“ veikia įprastai. */
+  $$(".qa").forEach((d) => {
+    const sum = $("summary", d);
+    const body = $(".qa__a", d);
+    if (!sum || !body || !body.animate) return;
+    let anim = null;
+    const finish = () => { body.classList.remove("is-animating"); d.classList.remove("is-closing"); anim = null; };
+    sum.addEventListener("click", (e) => {
+      if (reduceMotion()) return;
+      e.preventDefault();
+      const wasClosing = d.classList.contains("is-closing");
+      if (anim) anim.cancel();
+      body.classList.add("is-animating");
+      if (!d.open || wasClosing) {
+        d.open = true;
+        d.classList.remove("is-closing");
+        const h = body.offsetHeight;
+        anim = body.animate(
+          [{ height: "0px", opacity: 0 }, { height: h + "px", opacity: 1 }],
+          { duration: 340, easing: "cubic-bezier(.16, 1, .3, 1)" }
+        );
+        const a = anim; a.finished.then(() => { if (anim === a) finish(); }, () => {});
+      } else {
+        const h = body.offsetHeight;
+        d.classList.add("is-closing");
+        anim = body.animate(
+          [{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
+          { duration: 240, easing: "cubic-bezier(.4, 0, 1, 1)" }
+        );
+        const a = anim; a.finished.then(() => { if (anim === a) { d.open = false; finish(); } }, () => {});
+      }
+    });
+  });
 })();

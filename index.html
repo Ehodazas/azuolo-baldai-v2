@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/photo-1622372738946-62e02505feb3.jpg" imagesrcset="img/photo-1622372738946-62e02505feb3-800.jpg 800w, img/photo-1622372738946-62e02505feb3.jpg 1600w" imagesizes="(max-width: 899px) 100vw, 50vw">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.className += " js";</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -88,6 +89,22 @@
     <div class="hero__text">
       <p class="label">Baldų dirbtuvė Kaune</p>
       <h1 class="hero__title">Baldai, pagaminti pagal <em>jūsų</em> erdvę</h1>
+      <script>/* antraštės žodžiai įvyniojami į <span>, kad galėtų atsirasti po vieną; be šio skripto antraštė tiesiog matoma */
+        (function (h) {
+          var i = 0;
+          var word = function () { var s = document.createElement("span"); s.className = "w"; s.style.setProperty("--i", i++); return s; };
+          [].slice.call(h.childNodes).forEach(function (n) {
+            if (n.nodeType !== 3) { var w = word(); h.insertBefore(w, n); w.appendChild(n); return; }
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (p) {
+              if (!p) return;
+              if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+              var w = word(); w.textContent = p; frag.appendChild(w);
+            });
+            h.replaceChild(frag, n);
+          });
+        })(document.currentScript.previousElementSibling);
+      </script>
       <p class="hero__lead">Projektuojame ir gaminame virtuves, spintas, stalus ir miegamojo baldus iš medienos pagal tikslius patalpos matmenis. Atsiųskite eskizą ar išmatavimus, o mes pasakysime, ką galima padaryti.</p>
       <div class="hero__actions">
         <a href="#kontaktai" class="btn">Aptarti projektą <svg><use href="#i-arrow"/></svg></a>
@@ -186,11 +203,11 @@
         <p class="note">Iliustracinės interjerų nuotraukos, ne mūsų atlikti darbai. Jos padeda aptarti, kokios nuotaikos, spalvų ir formų norite.</p>
       </header>
       <ul class="mosaic" id="mosaic">
-        <li class="m m--a"><button type="button" class="m__btn" data-lb="0"><img src="img/photo-1600489000022-c2086d79f9d4-800.jpg" srcset="img/photo-1600489000022-c2086d79f9d4-800.jpg 800w, img/photo-1600489000022-c2086d79f9d4.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="1066" loading="lazy" decoding="async" alt="Virtuvė su tamsiai pilkais fasadais ir atviromis medinėmis lentynomis"></button></li>
-        <li class="m m--b"><button type="button" class="m__btn" data-lb="1"><img src="img/photo-1617806118233-18e1de247200-800.jpg" srcset="img/photo-1617806118233-18e1de247200-800.jpg 800w, img/photo-1617806118233-18e1de247200.jpg 1600w" sizes="(max-width: 899px) 100vw, 66vw" width="800" height="450" loading="lazy" decoding="async" alt="Valgomasis su baltu stalu, žaliomis kėdėmis ir apvaliu veidrodžiu"></button></li>
-        <li class="m m--c"><button type="button" class="m__btn" data-lb="2"><img src="img/photo-1616594039964-ae9021a400a0-800.jpg" srcset="img/photo-1616594039964-ae9021a400a0-800.jpg 800w, img/photo-1616594039964-ae9021a400a0.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="800" loading="lazy" decoding="async" alt="Miegamasis su minkštu lovos galvūgaliu ir suolu"></button></li>
-        <li class="m m--d"><button type="button" class="m__btn" data-lb="3"><img src="img/photo-1538688525198-9b88f6f53126-800.jpg" srcset="img/photo-1538688525198-9b88f6f53126-800.jpg 800w, img/photo-1538688525198-9b88f6f53126.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="600" loading="lazy" decoding="async" alt="Lofto stiliaus svetainė su plytų siena ir baro zona"></button></li>
-        <li class="m m--e"><button type="button" class="m__btn" data-lb="4"><img src="img/photo-1484154218962-a197022b5858-800.jpg" srcset="img/photo-1484154218962-a197022b5858-800.jpg 800w, img/photo-1484154218962-a197022b5858.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="531" loading="lazy" decoding="async" alt="Šviesi virtuvė su baltais fasadais ir įmontuota technika"></button></li>
+        <li class="m m--a"><button type="button" class="m__btn" data-lb="0"><img src="img/photo-1600489000022-c2086d79f9d4-800.jpg" srcset="img/photo-1600489000022-c2086d79f9d4-800.jpg 800w, img/photo-1600489000022-c2086d79f9d4.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="1066" loading="lazy" decoding="async" alt="Virtuvė su tamsiai pilkais fasadais ir atviromis medinėmis lentynomis"><span class="m__cap" aria-hidden="true">Tamsi virtuvė</span></button></li>
+        <li class="m m--b"><button type="button" class="m__btn" data-lb="1"><img src="img/photo-1617806118233-18e1de247200-800.jpg" srcset="img/photo-1617806118233-18e1de247200-800.jpg 800w, img/photo-1617806118233-18e1de247200.jpg 1600w" sizes="(max-width: 899px) 100vw, 66vw" width="800" height="450" loading="lazy" decoding="async" alt="Valgomasis su baltu stalu, žaliomis kėdėmis ir apvaliu veidrodžiu"><span class="m__cap" aria-hidden="true">Valgomasis</span></button></li>
+        <li class="m m--c"><button type="button" class="m__btn" data-lb="2"><img src="img/photo-1616594039964-ae9021a400a0-800.jpg" srcset="img/photo-1616594039964-ae9021a400a0-800.jpg 800w, img/photo-1616594039964-ae9021a400a0.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="800" loading="lazy" decoding="async" alt="Miegamasis su minkštu lovos galvūgaliu ir suolu"><span class="m__cap" aria-hidden="true">Miegamasis</span></button></li>
+        <li class="m m--d"><button type="button" class="m__btn" data-lb="3"><img src="img/photo-1538688525198-9b88f6f53126-800.jpg" srcset="img/photo-1538688525198-9b88f6f53126-800.jpg 800w, img/photo-1538688525198-9b88f6f53126.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="600" loading="lazy" decoding="async" alt="Lofto stiliaus svetainė su plytų siena ir baro zona"><span class="m__cap" aria-hidden="true">Lofto svetainė</span></button></li>
+        <li class="m m--e"><button type="button" class="m__btn" data-lb="4"><img src="img/photo-1484154218962-a197022b5858-800.jpg" srcset="img/photo-1484154218962-a197022b5858-800.jpg 800w, img/photo-1484154218962-a197022b5858.jpg 1600w" sizes="(max-width: 899px) 50vw, 33vw" width="800" height="531" loading="lazy" decoding="async" alt="Šviesi virtuvė su baltais fasadais ir įmontuota technika"><span class="m__cap" aria-hidden="true">Šviesi virtuvė</span></button></li>
       </ul>
     </div>
   </section>
