@@ -435,7 +435,19 @@ figcaption, .fig-tag {
 .fpanel { display: grid; align-content: start; background: var(--paper-2); }
 .fpanel--lacquer { background: var(--char); color: var(--paper); }
 .fpanel__img { position: relative; margin: 0; aspect-ratio: 16 / 7; overflow: hidden; }
-.fpanel__img img { width: 100%; height: 100%; object-fit: cover; }
+.fpanel__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+/* kompiuteryje vaizdas ~17 % žemesnis (16:7 → 11:4), kad skydeliuose dominuotų palyginimas */
+@media (min-width: 900px) { .fpanel__img { aspect-ratio: 11 / 4; } }
+/* švelnus priartėjimas tik pelei ir tik jei lankytojas neprašė mažinti judesio */
+@media (hover: hover) and (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .fpanel__img img { transition: transform .35s var(--ease-out); }
+  .fpanel:hover .fpanel__img img { transform: scale(1.03); }
+}
+.finishx__imgnote { margin-top: 14px; font-size: .8rem; color: var(--muted); }
+.finishx__guide { display: grid; gap: 10px; margin-top: clamp(28px, 4vw, 44px); padding-top: 22px; border-top: 1px solid var(--ink); }
+.finishx__guide-h { font-family: var(--serif); font-style: italic; font-size: 1.35rem; line-height: 1.2; color: var(--oak-deep); }
+.finishx__guide p { font-family: var(--serif); font-size: clamp(1.08rem, 1rem + .35vw, 1.28rem); line-height: 1.55; color: var(--ink-2); max-width: 62ch; }
+@media (min-width: 900px) { .finishx__guide { grid-template-columns: 220px minmax(0, 1fr); column-gap: 40px; } .finishx__guide-h { padding-top: 3px; } }
 .fpanel__name { font-family: var(--serif); font-size: clamp(2rem, 1.6rem + 1.6vw, 2.8rem); line-height: 1; padding: 26px 24px 18px; }
 .fpanel__dl { margin: 0 24px 26px; border-top: 1px solid currentColor; }
 .fpanel__dl div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
