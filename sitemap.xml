@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Svetainės žemėlapis paieškos sistemoms.
+     Svetainė paskelbta per GitHub Pages. Persikėlus į savo domeną, pakeiskite adresus čia, robots.txt ir index.html (canonical, og:image).
+     Privatumo politika neįtraukta, kol ji yra juodraštis (noindex). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ehodazas.github.io/azuolo-baldai-v2/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+</urlset>

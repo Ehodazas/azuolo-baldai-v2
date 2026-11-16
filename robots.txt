@@ -1,0 +1,7 @@
+# Paieškos sistemoms leidžiama indeksuoti visą svetainę, išskyrus serverio dalį.
+# Persikėlus į savo domeną, pakeiskite adresą žemiau.
+User-agent: *
+Disallow: /azuolo-baldai-v2/api/
+Disallow: /api/
+
+Sitemap: https://ehodazas.github.io/azuolo-baldai-v2/sitemap.xml
