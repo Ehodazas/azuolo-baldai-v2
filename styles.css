@@ -270,6 +270,29 @@ figcaption, .fig-tag {
 .prow__go { display: none; }
 .products__preview { display: none; }
 .products__hint { margin-top: 18px; font-size: .86rem; color: var(--muted); }
+.prow__tags { display: block; margin-top: 2px; font-size: .8rem; letter-spacing: .01em; color: var(--muted); }
+
+/* Kaina: be kainoraščio, tik veiksniai ir biudžetas */
+.pricing { margin-top: clamp(48px, 7vw, 88px); padding-top: 28px; border-top: 1px solid var(--ink); display: grid; gap: 22px; }
+.pricing__head { display: grid; gap: 10px; }
+.pricing__head p { color: var(--ink-2); max-width: 52ch; }
+.pricing__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; counter-reset: pf; }
+.pricing__list li { counter-increment: pf; display: grid; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pricing__list li::before { content: counter(pf, decimal-leading-zero); font-family: var(--serif); font-size: .85rem; color: var(--oak-deep); }
+.pricing__list strong { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; line-height: 1.15; }
+.pricing__list span { font-size: .88rem; color: var(--muted); }
+.pricing__cta { color: var(--ink-2); max-width: 60ch; }
+.pricing__cta .link { white-space: nowrap; font-weight: 600; color: var(--ink); }
+@media (min-width: 900px) {
+  .pricing { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); column-gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .pricing__list { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 18px; }
+  .pricing__list li { border-bottom: 0; border-left: 1px solid var(--line); padding: 4px 0 4px 14px; }
+  .pricing__cta { grid-column: 2; }
+}
+@media (min-width: 1240px) {
+  .pricing__list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .pricing__list strong { font-size: 1.2rem; }
+}
 @media (hover: hover) {
   .prow__title { transition: color .25s; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .4s var(--ease), color .25s; }
   .prow__link:hover .prow__title { color: var(--oak-deep); background-size: 100% 1px; }
@@ -406,6 +429,42 @@ figcaption, .fig-tag {
 .wpanel__dl dt { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
 .wpanel__dl dd { margin: 0; color: var(--ink-2); }
 .woodx__note { font-size: .84rem; }
+
+/* Dviejų rūšių palyginimas */
+.wcmp-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.wcmp-pick[hidden] { display: none; }
+.wcmp-pick__label { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.wcmp-pick__opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.wcmp-opt {
+  min-height: 40px; padding: 0 14px; border: 1px solid var(--paper-3); background: transparent; color: var(--ink-2);
+  font-family: var(--serif); font-size: 1rem; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-quick) ease-out, color var(--t-quick) ease-out, border-color var(--t-quick) ease-out;
+}
+.wcmp-opt[hidden] { display: none; }
+.wcmp-opt:hover { border-color: var(--ink); color: var(--ink); }
+.wcmp-opt[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.wcmp-opt:active { transform: scale(.97); }
+.wcmp[hidden] { display: none; }
+.wcmp__table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.wcmp__table thead th {
+  text-align: left; font-family: var(--serif); font-weight: 400; font-size: clamp(1.35rem, 1.1rem + 1.6vw, 2.4rem); line-height: 1.05;
+  padding: 0 14px 14px 0; border-bottom: 1px solid var(--ink); vertical-align: bottom;
+}
+.wcmp__table thead th + th { padding-left: 14px; border-left: 1px solid var(--line); }
+.wcmp__lbl th { text-align: left; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 14px 0 4px; }
+.wcmp__table td { vertical-align: top; padding: 0 14px 14px 0; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+.wcmp__table td + td { padding-left: 14px; border-left: 1px solid var(--line); }
+.wcmp__close { margin-top: 16px; padding: 6px 0; background: none; border: 0; cursor: pointer; font-size: .9rem; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.wcmp__close:hover { text-decoration-color: var(--oak); }
+/* padalytas vaizdas: kairėje pasirinkta rūšis, dešinėje lyginama */
+.woodx__layer { transition: opacity .3s ease-out, clip-path .35s var(--ease-out); clip-path: inset(0); }
+.woodx__stage.is-split .woodx__layer.is-left { clip-path: inset(0 50% 0 0); }
+.woodx__stage.is-split .woodx__layer.is-right { clip-path: inset(0 0 0 50%); }
+.woodx__stage.is-split .woodx__layer.is-right figcaption { left: auto; right: 12px; }
+.woodx__stage.is-split .woodx__layer figcaption { max-width: calc(50% - 24px); }
+.woodx__stage::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: var(--paper); opacity: 0; transition: opacity .3s ease-out; z-index: 3; }
+.woodx__stage.is-split::after { opacity: 1; }
+@media (max-width: 639px) { .woodx__stage.is-split .woodx__layer figcaption { display: none; } } /* siaurame ekrane pavadinimai matomi palyginimo lentelėje */
 
 @media (min-width: 1000px) {
   .woodx { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
@@ -558,6 +617,23 @@ figcaption, .fig-tag {
 .field ::placeholder { color: #9b9284; }
 .field.is-error input, .field.is-error select, .field.is-error textarea { border-color: var(--err); }
 .field__msg { color: var(--err); font-size: .84rem; line-height: 1.4; }
+.field__hint { font-size: .8rem; line-height: 1.4; color: var(--muted); }
+/* tikslesnis gaminio pasirinkimas: lietimui patogūs žymimieji „lustai“ */
+.details { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 10px; }
+.details[hidden] { display: none; }
+.details legend { padding: 0; margin-bottom: 10px; font-size: .8rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-2); }
+.details__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chk { position: relative; cursor: pointer; }
+.chk input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+.chk span {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--paper-3); background: #fbf8f3; font-size: .9rem;
+  transition: background-color var(--t-quick), color var(--t-quick), border-color var(--t-quick);
+}
+.chk span::before { content: ""; width: 12px; height: 12px; border: 1px solid currentColor; flex: none; transition: background-color var(--t-quick); }
+.chk input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chk input:checked + span::before { background: var(--oak-light); border-color: var(--oak-light); }
+.chk input:focus-visible + span { outline: 2px solid var(--oak); outline-offset: 2px; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .visit { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 10px; }

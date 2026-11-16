@@ -157,7 +157,7 @@
       if (res.ok && body && body.ok === true) {
         form.reset();
         const fi = form.querySelector('input[type="file"]'); if (fi) renderFileList(fi);
-        if (form.id === "form") AB.forms.syncVisit();
+        if (form.id === "form") { AB.forms.syncVisit(); AB.forms.syncDetails(); }
         $$(".is-error", form).forEach((w) => w.classList.remove("is-error"));
         const ok = $(".form__ok", form);
         ok.hidden = false;
@@ -202,8 +202,38 @@
   AB.forms = {
     setType(type) {
       $$("select[name='type']").forEach((s) => { if ([...s.options].some((o) => o.value === type)) s.value = type; });
+      AB.forms.syncDetails();
     },
   };
+
+  /* ---------- Tikslesnis pasirinkimas pagal gaminį ----------
+     Reikšmės („virtuve:fasadai“) sutampa su sąrašu api/uzklausa.php.
+     Pakeitus gaminį ankstesni pažymėjimai išvalomi, kad į užklausą nepatektų netinkami. */
+  const DETAILS = {
+    virtuve: [["visa", "Visa virtuvė"], ["fasadai", "Tik fasadai"], ["stalvirsis", "Stalviršis"], ["sala", "Virtuvės sala"]],
+    spinta: [["imontuota", "Įmontuota spinta"], ["stumdoma", "Spinta su stumdomomis durimis"], ["drabuzine", "Drabužinė"], ["prieskambaris", "Prieškambario baldai"]],
+    stalai: [["valgomojo", "Valgomojo stalas"], ["istraukiamas", "Ištraukiamas stalas"], ["kavos", "Kavos staliukas"], ["rasomasis", "Rašomasis stalas"], ["kedes", "Kėdės"], ["suoliukas", "Suoliukas"]],
+    miegamasis: [["lova", "Lova"], ["lova-deze", "Lova su patalynės dėže"], ["naktine", "Naktinė spintelė"], ["komoda", "Komoda"]],
+    svetaine: [["lentynos", "Lentynos ar knygų siena"], ["tv", "TV baldas"], ["staliukas", "Kavos staliukas"], ["indauja", "Komoda ar indauja"]],
+    restauravimas: [["stalas", "Stalas"], ["kedes", "Kėdės"], ["spinta", "Spinta ar komoda"], ["kita", "Kitas baldas"]],
+  };
+  const detailsBox = $("#details");
+  const detailsOpts = $("#detailsOpts");
+  const typeSel = full && full.elements.type;
+  let shownType = null;
+  AB.forms.syncDetails = () => {
+    if (!detailsBox || !typeSel) return;
+    const t = typeSel.value;
+    if (t === shownType) return;
+    shownType = t;
+    const list = DETAILS[t] || [];
+    detailsOpts.innerHTML = list.map(([k, label]) =>
+      `<label class="chk"><input type="checkbox" name="details[]" value="${t}:${k}"><span>${AB.esc(label)}</span></label>`).join("");
+    detailsBox.hidden = list.length === 0;
+  };
+  typeSel && typeSel.addEventListener("change", AB.forms.syncDetails);
+  full && full.addEventListener("reset", () => setTimeout(() => { shownType = null; AB.forms.syncDetails(); }, 0));
+  AB.forms.syncDetails();
   /* matavimas / vizitas */
   const visitWhen = $("#visitWhen");
   const visitDate = $("#f-visit-date");

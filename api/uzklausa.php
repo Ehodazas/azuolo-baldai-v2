@@ -89,6 +89,23 @@ $types = ['virtuve' => 'Virtuvė', 'spinta' => 'Spinta / drabužinė', 'stalai' 
           'svetaine' => 'Svetainės baldai', 'restauravimas' => 'Restauravimas', 'garantija' => 'Garantinis aptarnavimas', 'kita' => 'Kita'];
 $budgets = ['iki-1000' => 'Iki 1 000 €', '1000-3000' => '1 000–3 000 €', '3000-7000' => '3 000–7 000 €', 'virs-7000' => 'Daugiau nei 7 000 €', 'nezinau' => 'Dar nežinau'];
 
+/* tikslesnis gaminio pasirinkimas (laukas details[]); sąrašas sutampa su js/forms.js */
+$detailLabels = [
+    'virtuve:visa' => 'Visa virtuvė', 'virtuve:fasadai' => 'Tik fasadai', 'virtuve:stalvirsis' => 'Stalviršis', 'virtuve:sala' => 'Virtuvės sala',
+    'spinta:imontuota' => 'Įmontuota spinta', 'spinta:stumdoma' => 'Spinta su stumdomomis durimis', 'spinta:drabuzine' => 'Drabužinė', 'spinta:prieskambaris' => 'Prieškambario baldai',
+    'stalai:valgomojo' => 'Valgomojo stalas', 'stalai:istraukiamas' => 'Ištraukiamas stalas', 'stalai:kavos' => 'Kavos staliukas', 'stalai:rasomasis' => 'Rašomasis stalas', 'stalai:kedes' => 'Kėdės', 'stalai:suoliukas' => 'Suoliukas',
+    'miegamasis:lova' => 'Lova', 'miegamasis:lova-deze' => 'Lova su patalynės dėže', 'miegamasis:naktine' => 'Naktinė spintelė', 'miegamasis:komoda' => 'Komoda',
+    'svetaine:lentynos' => 'Lentynos ar knygų siena', 'svetaine:tv' => 'TV baldas', 'svetaine:staliukas' => 'Kavos staliukas', 'svetaine:indauja' => 'Komoda ar indauja',
+    'restauravimas:stalas' => 'Stalas', 'restauravimas:kedes' => 'Kėdės', 'restauravimas:spinta' => 'Spinta ar komoda', 'restauravimas:kita' => 'Kitas baldas',
+];
+$details = [];
+foreach (array_slice((array) ($_POST['details'] ?? []), 0, 10) as $d) {
+    $d = (string) $d;
+    /* priimamos tik žinomos reikšmės ir tik pasirinktam gaminiui */
+    if (isset($detailLabels[$d]) && strpos($d, $type . ':') === 0) $details[] = $detailLabels[$d];
+}
+$details = array_values(array_unique($details));
+
 $errors = [];
 if (mb_strlen($name) < 2) $errors['name'] = 'Įrašykite vardą.';
 if (!preg_match('/^\+?[0-9 ()-]{6,20}$/', $phone) || strlen(preg_replace('/\D/', '', $phone)) < 6) $errors['phone'] = 'Patikrinkite telefono numerį.';
@@ -153,6 +170,7 @@ $lines = [
     'El. paštas: ' . ($email !== '' ? $email : '—'),
     'Gaminys: ' . $types[$type],
 ];
+if ($details) $lines[] = 'Tiksliau domina: ' . implode(', ', $details);
 if ($formType === 'full') $lines[] = 'Biudžetas: ' . ($budgets[$budget] ?? '—');
 if ($project !== '') $lines[] = 'Domina projektas: ' . $project;
 if ($favs !== '') $lines[] = 'Mėgstami projektai: ' . $favs;

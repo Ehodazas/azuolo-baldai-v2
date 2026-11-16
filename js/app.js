@@ -100,17 +100,18 @@
   rows[0] && rows[0].classList.add("is-active");
 
   /* ---------- Užklausos formos parinkimas iš nuorodų (#u-virtuve ir pan.) ---------- */
-  const scrollToForm = () => {
+  const scrollToForm = (focusId = "f-name") => {
     const form = $("#form");
     if (!form) return;
     form.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
-    const first = $("#f-name");
-    first && setTimeout(() => first.focus({ preventScroll: true }), reduceMotion() ? 0 : 600);
+    const target = document.getElementById(focusId);
+    target && setTimeout(() => target.focus({ preventScroll: true }), reduceMotion() ? 0 : 600);
   };
   const route = (hash) => {
     const m = /^#u-([a-z]+)$/.exec(hash || "");
     if (!m || !AB.forms) return false;
     const type = m[1];
+    if (type === "biudzetas") { scrollToForm("f-budget"); return true; } /* „Nurodyti biudžetą“ */
     if (type === "vizitas" || type === "matavimas") AB.forms.setVisit(type);
     else AB.forms.setType(type);
     scrollToForm();
@@ -244,24 +245,78 @@
     const tabs = $$(".wtab", woodx);
     const panels = $$(".wpanel", woodx);
     const layers = $$(".woodx__layer", woodx);
+    const stage = $(".woodx__stage", woodx);
+    const pick = $(".wcmp-pick", woodx);
+    const opts = $$(".wcmp-opt", woodx);
+    const cmp = $("#wcmp");
+    let current = null;   /* pasirinkta rūšis */
+    let other = null;     /* rūšis, su kuria lyginama (arba null) */
+
+    /* aprašymų duomenys paimami iš jau esamų skydelių, kad tekstas būtų vienoje vietoje */
+    const info = (key) => {
+      const p = panels.find((x) => x.dataset.wood === key);
+      const rows = {};
+      $$(".wpanel__dl > div", p).forEach((d) => { rows[$("dt", d).textContent] = $("dd", d).textContent; });
+      return { name: $(".wpanel__name", p).textContent, rows };
+    };
+    const animateIn = (el) => {
+      if (!reduceMotion() && el.animate) el.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 280, easing: "ease-out" });
+    };
+    const render = () => {
+      const comparing = !!other;
+      /* vaizdas: viena rūšis arba padalytas per pusę į dvi */
+      stage.classList.toggle("is-split", comparing);
+      layers.forEach((l) => {
+        const w = l.dataset.wood;
+        l.classList.toggle("is-on", w === current || w === other);
+        l.classList.toggle("is-left", comparing && w === current);
+        l.classList.toggle("is-right", comparing && w === other);
+      });
+      /* palyginimo mygtukai: dabartinė rūšis paslepiama */
+      opts.forEach((o) => {
+        o.hidden = o.dataset.wood === current;
+        o.setAttribute("aria-pressed", String(o.dataset.wood === other));
+      });
+      /* aprašymas arba palyginimas */
+      panels.forEach((p) => { p.hidden = comparing || p.dataset.wood !== current; });
+      cmp.hidden = !comparing;
+      if (comparing) {
+        const a = info(current), b = info(other);
+        const labels = Object.keys(a.rows);
+        cmp.innerHTML =
+          `<table class="wcmp__table"><caption class="sr-only">${AB.esc(a.name)} ir ${AB.esc(b.name)}: palyginimas</caption>` +
+          `<thead><tr><th scope="col">${AB.esc(a.name)}</th><th scope="col">${AB.esc(b.name)}</th></tr></thead><tbody>` +
+          labels.map((l) => `<tr class="wcmp__lbl"><th colspan="2" scope="colgroup">${AB.esc(l)}</th></tr><tr><td>${AB.esc(a.rows[l] || "")}</td><td>${AB.esc(b.rows[l] || "")}</td></tr>`).join("") +
+          `</tbody></table><button type="button" class="wcmp__close">Baigti palyginimą</button>`;
+        $(".wcmp__close", cmp).addEventListener("click", () => {
+          const back = opts.find((o) => o.dataset.wood === other);
+          other = null;
+          render();
+          back && back.focus();
+        });
+        animateIn(cmp);
+      } else {
+        const p = panels.find((x) => x.dataset.wood === current);
+        p && animateIn(p);
+      }
+    };
     const select = (tab, focus) => {
-      const key = tab.dataset.wood;
+      current = tab.dataset.wood;
+      if (other === current) other = null;
       tabs.forEach((t) => {
         const on = t === tab;
         t.setAttribute("aria-selected", String(on));
         t.tabIndex = on ? 0 : -1;
       });
-      panels.forEach((p) => {
-        const on = p.dataset.wood === key;
-        p.hidden = !on;
-        if (on && !reduceMotion() && p.animate) {
-          p.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 280, easing: "ease-out" });
-        }
-      });
-      layers.forEach((l) => l.classList.toggle("is-on", l.dataset.wood === key));
+      render();
       if (focus) tab.focus();
     };
+    opts.forEach((o) => o.addEventListener("click", () => {
+      other = other === o.dataset.wood ? null : o.dataset.wood; /* antras paspaudimas palyginimą išjungia */
+      render();
+    }));
     tablist.hidden = false;
+    if (pick) pick.hidden = false;
     woodx.classList.add("is-ready");
     select(tabs.find((t) => t.getAttribute("aria-selected") === "true") || tabs[0], false);
     tabs.forEach((t, i) => {
