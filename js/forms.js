@@ -174,8 +174,8 @@
         first && first.focus();
       }
       const reason = res.status === 429 ? "Per daug užklausų per trumpą laiką. Pabandykite po kelių minučių."
-        : (body && body.error) ? body.error
-        : `Serveris atsakė klaida (${res.status}).`;
+        : (body && body.error) ? String(body.error).replace(/([^.!?])$/, "$1.")
+        : res.ok ? "Serveris pateikė netikėtą atsakymą." : `Serveris atsakė klaida (${res.status}).`;
       showError(form, `Užklausos išsiųsti nepavyko. ${reason} Duomenys liko formoje. ${CONTACT_FALLBACK}`);
     } catch (e) {
       const reason = e.name === "AbortError" ? "Serveris per ilgai neatsakė." : "Nepavyko susisiekti su serveriu. Patikrinkite interneto ryšį.";
