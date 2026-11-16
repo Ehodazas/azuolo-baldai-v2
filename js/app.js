@@ -234,4 +234,45 @@
       }
     });
   });
+
+  /* ---------- Medienos rūšių pasirinkimas (WAI-ARIA skirtukai) ----------
+     Rodyklės keičia rūšį iškart, Home / End – pirmą ir paskutinę.
+     Be JavaScript mygtukai paslėpti, o visi aprašymai matomi iš eilės. */
+  const woodx = $("#woodx");
+  if (woodx) {
+    const tablist = $(".woodx__tabs", woodx);
+    const tabs = $$(".wtab", woodx);
+    const panels = $$(".wpanel", woodx);
+    const layers = $$(".woodx__layer", woodx);
+    const select = (tab, focus) => {
+      const key = tab.dataset.wood;
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => {
+        const on = p.dataset.wood === key;
+        p.hidden = !on;
+        if (on && !reduceMotion() && p.animate) {
+          p.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 280, easing: "ease-out" });
+        }
+      });
+      layers.forEach((l) => l.classList.toggle("is-on", l.dataset.wood === key));
+      if (focus) tab.focus();
+    };
+    tablist.hidden = false;
+    woodx.classList.add("is-ready");
+    select(tabs.find((t) => t.getAttribute("aria-selected") === "true") || tabs[0], false);
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t, false));
+      t.addEventListener("keydown", (e) => {
+        const n = tabs.length;
+        const map = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: n - 1 };
+        if (!(e.key in map)) return;
+        e.preventDefault();
+        select(tabs[(map[e.key] + n) % n], true);
+      });
+    });
+  }
 })();

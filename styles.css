@@ -355,45 +355,113 @@ figcaption, .fig-tag {
   .step::before { left: 13px; top: calc(34px + 3.5rem); bottom: -34px; }
 }
 
-/* ---------- Mediena ---------- */
+/* ---------- Mediena ir apdaila ---------- */
 .wood .h2 { max-width: 22ch; }
-.wood__grid { display: grid; gap: 56px; }
-.species { margin: 0; border-top: 1px solid var(--ink); }
-.species div { display: grid; gap: 6px; padding: 20px 0; border-bottom: 1px solid var(--line); }
-.species dt { font-family: var(--serif); font-size: 1.6rem; line-height: 1.1; }
-.species dd { margin: 0; color: var(--ink-2); font-size: .97rem; max-width: 52ch; }
-@media (min-width: 640px) { .species div { grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: baseline; } }
-.finish .h4 { margin-bottom: 16px; }
-.finish__table { width: 100%; border-collapse: collapse; font-size: .93rem; }
-.finish__table th, .finish__table td { text-align: left; vertical-align: top; padding: 14px 12px 14px 0; border-bottom: 1px solid var(--line); }
-.finish__table thead th { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; border-bottom-color: var(--ink); }
-.finish__table tbody th { font-weight: 600; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); width: 28%; padding-top: 17px; }
-.finish__table td { color: var(--ink-2); }
-@media (max-width: 519px) {
-  .finish__table thead { display: none; }
-  .finish__table tr { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; border-bottom: 1px solid var(--line); padding: 12px 0; }
-  .finish__table tbody th { grid-column: 1 / -1; width: auto; border: 0; padding: 0 0 6px; }
-  .finish__table td { border: 0; padding: 0; }
-  .finish__table td::before { display: block; font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-bottom: 2px; }
-  .finish__table td:nth-of-type(1)::before { content: "Alyva"; }
-  .finish__table td:nth-of-type(2)::before { content: "Lakas"; }
-}
-@media (min-width: 1000px) { .wood__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(48px, 6vw, 96px); } }
 
-.swatches { margin-top: clamp(56px, 8vw, 96px); display: grid; gap: 18px; }
-.swatches__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.swatches__list li:last-child { grid-column: span 2; }
-.sw { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--paper-2); cursor: zoom-in; text-align: left; overflow: hidden; }
-.sw img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform var(--t-hover) var(--ease-out); }
-.swatches__list li:last-child .sw img { aspect-ratio: 16 / 7; }
-.sw__name { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 12px 10px; color: #fff; font-size: .86rem; font-weight: 500; background: linear-gradient(transparent, rgba(0, 0, 0, .55)); }
-@media (hover: hover) { .sw:hover img, .sw:focus-visible img { transform: scale(1.04); } }
-.sw:focus-visible { outline-offset: -3px; }
-@media (min-width: 760px) {
-  .swatches__list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-  .swatches__list li:last-child { grid-column: auto; }
-  .swatches__list li:last-child .sw img, .sw img { aspect-ratio: 2 / 3.4; }
+/* Medienos rūšys: didelis vaizdas ir pasirinkimas šalia */
+.woodx { display: grid; gap: 28px; }
+.woodx__stage {
+  position: relative; overflow: hidden; background: var(--paper-2);
+  aspect-ratio: 4 / 3;
 }
+.woodx__layer { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity .3s ease-out; }
+.woodx__layer.is-on { opacity: 1; }
+.woodx__layer img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.03); transition: transform .6s var(--ease-out); }
+.woodx__layer.is-on img { transform: none; }
+.woodx__layer figcaption { z-index: 2; right: 12px; max-width: max-content; }
+/* pakaitalas: apytikslis tonas su labai ramiu linijų raštu ir aiškiu užrašu */
+.woodx__layer--ph {
+  display: grid; place-items: center; padding: 24px;
+  background:
+    repeating-linear-gradient(176deg, transparent 0 9px, rgba(120, 92, 58, .07) 9px 10px, transparent 10px 23px),
+    linear-gradient(160deg, var(--tone), var(--tone-2));
+}
+.woodx__ph { display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 30ch; }
+.woodx__ph-name { font-family: var(--serif); font-style: italic; font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); line-height: 1; color: rgba(29, 27, 24, .55); }
+.woodx__ph-note { font-size: .86rem; color: var(--ink-2); }
+
+.woodx__side { display: grid; gap: 22px; align-content: start; }
+
+/* Pasirinkimas: telefone 2 × 2 mygtukai, kompiuteryje vertikalus sąrašas */
+.woodx__tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.woodx__tabs[hidden] { display: none; }
+@media (min-width: 640px) and (max-width: 999px) { .woodx__tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.wtab {
+  /* telefone: numeris ir spalvos taškas viršuje, pavadinimas visu pločiu apačioje, kad ilgi žodžiai tilptų */
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "n chip" "name name";
+  align-items: center; gap: 6px 10px;
+  min-height: 64px; padding: 10px 12px 12px; text-align: left; cursor: pointer;
+  background: transparent; border: 1px solid var(--paper-3); color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--t-quick) ease-out, color var(--t-quick) ease-out, background-color var(--t-quick) ease-out;
+}
+.wtab__n { grid-area: n; font-family: var(--serif); font-size: .85rem; color: var(--oak-deep); }
+.wtab__name { grid-area: name; font-family: var(--serif); font-size: 1.2rem; line-height: 1.1; color: inherit; overflow-wrap: anywhere; }
+.wtab__chip { grid-area: chip; width: 16px; height: 16px; border-radius: 50%; background: var(--tone); box-shadow: inset 0 0 0 1px rgba(29, 27, 24, .15); transition: transform var(--t-hover) var(--ease-out); }
+.wtab:hover { color: var(--ink); border-color: var(--muted); }
+.wtab[aria-selected="true"] { color: var(--ink); border-color: var(--ink); background: #fbf8f3; }
+.wtab[aria-selected="true"] .wtab__chip { transform: scale(1.2); }
+.wtab:active { transform: scale(.985); }
+
+/* Aprašymas */
+.woodx__panels { position: relative; }
+.wpanel { padding: 0; }
+.wpanel + .wpanel { margin-top: 28px; } /* be JS visi aprašymai matomi iš eilės */
+.woodx.is-ready .wpanel + .wpanel { margin-top: 0; }
+.wpanel__name { font-family: var(--serif); font-size: clamp(2rem, 1.5rem + 2vw, 3.2rem); line-height: 1.02; letter-spacing: -.015em; margin-bottom: 18px; }
+.wpanel__dl { margin: 0; border-top: 1px solid var(--ink); }
+.wpanel__dl div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.wpanel__dl dt { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.wpanel__dl dd { margin: 0; color: var(--ink-2); }
+.woodx__note { font-size: .84rem; }
+
+@media (min-width: 1000px) {
+  .woodx { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .woodx__stage { aspect-ratio: 4 / 5; }
+  .woodx__tabs { grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--line); }
+  .wtab {
+    grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "n name chip"; min-height: 62px; padding: 12px 0 12px 18px;
+    border: 0; border-bottom: 1px solid var(--line); background: transparent;
+  }
+  /* aktyvi rūšis pažymima plona vertikalia linija kairėje */
+  .wtab::before {
+    content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; background: var(--oak);
+    transform: scaleY(0); transition: transform var(--t-hover) var(--ease-out);
+  }
+  .wtab__name { font-size: 1.55rem; }
+  .wtab:hover { background: transparent; }
+  .wtab[aria-selected="true"] { background: transparent; border-color: var(--line); }
+  .wtab[aria-selected="true"]::before { transform: none; }
+  .wtab:focus-visible { outline-offset: -2px; }
+}
+
+/* Alyva ir lakas */
+.finishx { margin-top: clamp(64px, 9vw, 120px); }
+.finishx__head { display: grid; gap: 10px; margin-bottom: 28px; }
+@media (min-width: 900px) { .finishx__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 40px; } .finishx__head .note { justify-self: end; } }
+.finishx__grid { display: grid; gap: 12px; }
+.fpanel { display: grid; align-content: start; background: var(--paper-2); }
+.fpanel--lacquer { background: var(--char); color: var(--paper); }
+.fpanel__img { position: relative; margin: 0; aspect-ratio: 16 / 7; overflow: hidden; }
+.fpanel__img img { width: 100%; height: 100%; object-fit: cover; }
+.fpanel__name { font-family: var(--serif); font-size: clamp(2rem, 1.6rem + 1.6vw, 2.8rem); line-height: 1; padding: 26px 24px 18px; }
+.fpanel__dl { margin: 0 24px 26px; border-top: 1px solid currentColor; }
+.fpanel__dl div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.fpanel--lacquer .fpanel__dl div { border-bottom-color: var(--line-light); }
+.fpanel__dl dt { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fpanel--lacquer .fpanel__dl dt { color: rgba(243, 238, 230, .55); }
+.fpanel__dl dd { margin: 0; font-size: 1rem; }
+@media (min-width: 640px) {
+  .fpanel__dl div { grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+}
+@media (min-width: 900px) {
+  /* abu skydeliai greta; eilutės sulygiuotos, kad tą pačią savybę būtų galima palyginti vienu žvilgsniu */
+  .finishx__grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(6, auto); column-gap: 12px; row-gap: 0; }
+  .fpanel { grid-row: span 6; grid-template-rows: subgrid; }
+  .fpanel__dl { display: grid; grid-row: span 4; grid-template-rows: subgrid; }
+  .fpanel__dl div { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (min-width: 1100px) { .fpanel__dl div { grid-template-columns: 140px minmax(0, 1fr); gap: 16px; } }
 
 /* ---------- DUK ---------- */
 .faq { padding-top: 0; }

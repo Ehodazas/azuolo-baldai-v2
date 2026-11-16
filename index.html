@@ -242,39 +242,105 @@
         <h2 class="h2" id="mediena-h">Mediena keičia ne tik spalvą, bet ir tai, kaip baldas sensta</h2>
       </header>
 
-      <div class="wood__grid">
-        <dl class="species">
-          <div><dt>Ąžuolas</dt><dd>Kietas ir sunkus, su ryškiu rievių raštu. Tinka stalams, stalviršiams ir kitiems kasdien naudojamiems paviršiams. Laikui bėgant šiek tiek patamsėja.</dd></div>
-          <div><dt>Uosis</dt><dd>Šviesus, tvirtas ir elastingas. Tinka kėdėms ir plonesnėms detalėms.</dd></div>
-          <div><dt>Riešutmedis</dt><dd>Sodrios tamsiai rudos spalvos, tolygaus rašto. Dažniausiai renkamasi akcentiniams baldams.</dd></div>
-          <div><dt>Beržas</dt><dd>Šviesus ir smulkaus rašto. Tinka ramaus, skandinaviško stiliaus interjerams.</dd></div>
-        </dl>
+      <!-- Medienos rūšys: pasirinkus rūšį keičiasi vaizdas ir aprašymas.
+           Be JavaScript matomi visi aprašymai iš eilės. -->
+      <div class="woodx" id="woodx">
+        <div class="woodx__stage" aria-hidden="true">
+          <figure class="woodx__layer is-on" data-wood="azuolas">
+            <img src="img/tekstura-sviesus-azuolas.jpg" width="800" height="600" loading="lazy" decoding="async" alt="">
+            <figcaption>Iliustracija: ąžuolo rašto paviršius, iškirptas iš interjero nuotraukos</figcaption>
+          </figure>
+          <figure class="woodx__layer woodx__layer--ph" data-wood="uosis" style="--tone: #e2d5bc; --tone-2: #d3c3a6;">
+            <span class="woodx__ph"><span class="woodx__ph-name">Uosis</span><span class="woodx__ph-note">Uosio pavyzdžio nuotraukos dar neturime. Spalva čia tik apytikslė.</span></span>
+            <figcaption>Vietos rezervavimas, ne nuotrauka</figcaption>
+          </figure>
+          <figure class="woodx__layer" data-wood="riesutmedis">
+            <img src="img/tekstura-riesutmedzio-tonas.jpg" width="800" height="600" loading="lazy" decoding="async" alt="">
+            <figcaption>Iliustracija: panašaus tono paviršius, ne tikras riešutmedžio pavyzdys</figcaption>
+          </figure>
+          <figure class="woodx__layer woodx__layer--ph" data-wood="berzas" style="--tone: #eadcc2; --tone-2: #dfcdae;">
+            <span class="woodx__ph"><span class="woodx__ph-name">Beržas</span><span class="woodx__ph-note">Beržo pavyzdžio nuotraukos dar neturime. Spalva čia tik apytikslė.</span></span>
+            <figcaption>Vietos rezervavimas, ne nuotrauka</figcaption>
+          </figure>
+        </div>
 
-        <div class="finish">
-          <h3 class="h4">Alyva ar lakas?</h3>
-          <table class="finish__table">
-            <caption class="sr-only">Alyvos ir lako palyginimas</caption>
-            <thead><tr><th scope="col"><span class="sr-only">Savybė</span></th><th scope="col">Alyva</th><th scope="col">Lakas</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Paviršius</th><td>Matinis, juntama medienos tekstūra</td><td>Lygus, nuo matinio iki blizgaus</td></tr>
-              <tr><th scope="row">Dėmės ir drėgmė</th><td>Skysčius reikia nušluostyti greičiau</td><td>Atsparesnis dėmėms ir drėgmei</td></tr>
-              <tr><th scope="row">Atnaujinimas</th><td>Įbrėžimą galima pataisyti vietoje</td><td>Pažeistą vietą sunkiau pataisyti nepastebimai</td></tr>
-              <tr><th scope="row">Priežiūra</th><td>Kartkartėmis papildomai alyvuoti</td><td>Pakanka valyti drėgna šluoste</td></tr>
-            </tbody>
-          </table>
+        <div class="woodx__side">
+          <div class="woodx__tabs" role="tablist" aria-label="Medienos rūšys" hidden>
+            <button class="wtab" type="button" role="tab" id="wt-azuolas" aria-controls="wp-azuolas" aria-selected="true" data-wood="azuolas" style="--tone: #c4a57b;"><span class="wtab__n">01</span><span class="wtab__name">Ąžuolas</span><span class="wtab__chip" aria-hidden="true"></span></button>
+            <button class="wtab" type="button" role="tab" id="wt-uosis" aria-controls="wp-uosis" aria-selected="false" tabindex="-1" data-wood="uosis" style="--tone: #e2d5bc;"><span class="wtab__n">02</span><span class="wtab__name">Uosis</span><span class="wtab__chip" aria-hidden="true"></span></button>
+            <button class="wtab" type="button" role="tab" id="wt-riesutmedis" aria-controls="wp-riesutmedis" aria-selected="false" tabindex="-1" data-wood="riesutmedis" style="--tone: #5b3f2c;"><span class="wtab__n">03</span><span class="wtab__name">Riešutmedis</span><span class="wtab__chip" aria-hidden="true"></span></button>
+            <button class="wtab" type="button" role="tab" id="wt-berzas" aria-controls="wp-berzas" aria-selected="false" tabindex="-1" data-wood="berzas" style="--tone: #eadcc2;"><span class="wtab__n">04</span><span class="wtab__name">Beržas</span><span class="wtab__chip" aria-hidden="true"></span></button>
+          </div>
+
+          <div class="woodx__panels">
+            <article class="wpanel" id="wp-azuolas" role="tabpanel" aria-labelledby="wt-azuolas" data-wood="azuolas">
+              <h3 class="wpanel__name">Ąžuolas</h3>
+              <dl class="wpanel__dl">
+                <div><dt>Savybės</dt><dd>Kietas ir sunkus, su ryškiu rievių raštu. Laikui bėgant šiek tiek patamsėja.</dd></div>
+                <div><dt>Tinka</dt><dd>Stalams, stalviršiams ir kitiems kasdien naudojamiems paviršiams.</dd></div>
+              </dl>
+            </article>
+            <article class="wpanel" id="wp-uosis" role="tabpanel" aria-labelledby="wt-uosis" data-wood="uosis">
+              <h3 class="wpanel__name">Uosis</h3>
+              <dl class="wpanel__dl">
+                <div><dt>Savybės</dt><dd>Šviesus, tvirtas ir elastingas.</dd></div>
+                <div><dt>Tinka</dt><dd>Kėdėms ir plonesnėms detalėms.</dd></div>
+              </dl>
+            </article>
+            <article class="wpanel" id="wp-riesutmedis" role="tabpanel" aria-labelledby="wt-riesutmedis" data-wood="riesutmedis">
+              <h3 class="wpanel__name">Riešutmedis</h3>
+              <dl class="wpanel__dl">
+                <div><dt>Savybės</dt><dd>Sodrios tamsiai rudos spalvos, tolygaus rašto.</dd></div>
+                <div><dt>Tinka</dt><dd>Dažniausiai renkamasi akcentiniams baldams.</dd></div>
+              </dl>
+            </article>
+            <article class="wpanel" id="wp-berzas" role="tabpanel" aria-labelledby="wt-berzas" data-wood="berzas">
+              <h3 class="wpanel__name">Beržas</h3>
+              <dl class="wpanel__dl">
+                <div><dt>Savybės</dt><dd>Šviesus ir smulkaus rašto.</dd></div>
+                <div><dt>Tinka</dt><dd>Ramaus, skandinaviško stiliaus interjerams.</dd></div>
+              </dl>
+            </article>
+          </div>
+
+          <p class="note woodx__note">Ekrane spalvos atrodo kitaip nei tikrovėje. Tikrus medienos ir apdailos pavyzdžius parodysime dirbtuvėje arba atvešime matavimo metu.</p>
         </div>
       </div>
 
-      <div class="swatches">
-        <h3 class="h4">Tekstūrų pavyzdžiai</h3>
-        <ul class="swatches__list" id="swatches">
-          <li><button type="button" class="sw" data-lb="5"><img src="img/tekstura-sviesus-azuolas.jpg" width="800" height="600" loading="lazy" decoding="async" alt="Šviesaus ąžuolo rašto paviršius su ryškiomis rievėmis"><span class="sw__name">Šviesus ąžuolo raštas</span></button></li>
-          <li><button type="button" class="sw" data-lb="6"><img src="img/tekstura-sviesi-alyvuota.jpg" width="800" height="600" loading="lazy" decoding="async" alt="Šviesios medaus atspalvio medienos lentos su šakelėmis"><span class="sw__name">Medaus atspalvis</span></button></li>
-          <li><button type="button" class="sw" data-lb="7"><img src="img/tekstura-riesutmedzio-tonas.jpg" width="800" height="600" loading="lazy" decoding="async" alt="Šilto rudo riešutmedžio tono paviršius tiesiu raštu"><span class="sw__name">Riešutmedžio tonas</span></button></li>
-          <li><button type="button" class="sw" data-lb="8"><img src="img/tekstura-lakuota.jpg" width="800" height="600" loading="lazy" decoding="async" alt="Blizgus lakuotas rudos medienos paviršius"><span class="sw__name">Lakuotas paviršius</span></button></li>
-          <li><button type="button" class="sw" data-lb="9"><img src="img/tekstura-tamsios-lameles.jpg" width="800" height="600" loading="lazy" decoding="async" alt="Tamsus matinis paviršius su vertikaliomis lamelėmis"><span class="sw__name">Tamsios lamelės</span></button></li>
-        </ul>
-        <p class="note">Iliustracija: tekstūros iškirptos iš interjerų nuotraukų, o ekrane spalvos atrodo kitaip nei tikrovėje. Tikrus medienos ir apdailos pavyzdžius parodysime dirbtuvėje arba atvešime matavimo metu.</p>
+      <!-- Alyva ir lakas: du skydeliai su tomis pačiomis eilutėmis ta pačia tvarka, kad būtų lengva lyginti -->
+      <div class="finishx">
+        <div class="finishx__head">
+          <h3 class="h3" id="finishx-h">Alyva ar lakas?</h3>
+          <p class="note">Apdaila lemia, kaip paviršius atrodo, kaip jaučiasi po ranka ir kaip jį prižiūrėti.</p>
+        </div>
+        <div class="finishx__grid">
+          <section class="fpanel fpanel--oil" aria-labelledby="fp-oil">
+            <figure class="fpanel__img">
+              <img src="img/tekstura-sviesi-alyvuota.jpg" width="800" height="600" loading="lazy" decoding="async" alt="">
+              <figcaption>Iliustracija</figcaption>
+            </figure>
+            <h4 class="fpanel__name" id="fp-oil">Alyva</h4>
+            <dl class="fpanel__dl">
+              <div><dt>Paviršius</dt><dd>Matinis, juntama medienos tekstūra</dd></div>
+              <div><dt>Dėmės ir drėgmė</dt><dd>Skysčius reikia nušluostyti greičiau</dd></div>
+              <div><dt>Atnaujinimas</dt><dd>Įbrėžimą galima pataisyti vietoje</dd></div>
+              <div><dt>Priežiūra</dt><dd>Kartkartėmis papildomai alyvuoti</dd></div>
+            </dl>
+          </section>
+          <section class="fpanel fpanel--lacquer" aria-labelledby="fp-lacquer">
+            <figure class="fpanel__img">
+              <img src="img/tekstura-lakuota.jpg" width="800" height="600" loading="lazy" decoding="async" alt="">
+              <figcaption>Iliustracija</figcaption>
+            </figure>
+            <h4 class="fpanel__name" id="fp-lacquer">Lakas</h4>
+            <dl class="fpanel__dl">
+              <div><dt>Paviršius</dt><dd>Lygus, nuo matinio iki blizgaus</dd></div>
+              <div><dt>Dėmės ir drėgmė</dt><dd>Atsparesnis dėmėms ir drėgmei</dd></div>
+              <div><dt>Atnaujinimas</dt><dd>Pažeistą vietą sunkiau pataisyti nepastebimai</dd></div>
+              <div><dt>Priežiūra</dt><dd>Pakanka valyti drėgna šluoste</dd></div>
+            </dl>
+          </section>
+        </div>
       </div>
     </div>
   </section>
