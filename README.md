@@ -17,3 +17,14 @@ kainų, atsiliepimų, garantijų ar įmonės faktų. Ko trūksta, surašyta fail
 | `api/uzklausa.php` | Užklausų priėmimas ir siuntimas el. paštu |
 
 Formos prijungimas: [INTEGRACIJA.md](INTEGRACIJA.md).
+
+## Nuotraukų licencijos
+
+- `img/photo-*.jpg` – Unsplash nuotraukos (Unsplash licencija), naudojamos kaip iliustracijos.
+- `img/mediena-*.jpg` – medienos mėginių nuotraukos, autorius Achim Raschka, Wikimedia Commons,
+  licencija [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Apkirptos iki 4:5 ir sumažintos.
+  Šaltiniai: [ąžuolas](https://commons.wikimedia.org/wiki/File:Wood_Quercus_robur.jpg),
+  [uosis](https://commons.wikimedia.org/wiki/File:Wood_Fraxinus_excelsior.jpg),
+  [riešutmedis](https://commons.wikimedia.org/wiki/File:Wood_juglans_regia.jpg),
+  [beržas](https://commons.wikimedia.org/wiki/File:Wood_Betula_verucosa.jpg).
+  Pagal licenciją pakeistos versijos platinamos ta pačia CC BY-SA 3.0 licencija, o autorius nurodomas svetainėje.
