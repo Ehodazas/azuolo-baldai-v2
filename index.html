@@ -12,7 +12,7 @@
   <meta property="og:title" content="Ąžuolo baldai — baldai pagal užsakymą Kaune">
   <meta property="og:description" content="Virtuvės, spintos, stalai ir miegamojo baldai iš medienos pagal jūsų patalpos matmenis.">
   <meta property="og:image" content="https://ehodazas.github.io/azuolo-baldai-v2/img/photo-1622372738946-62e02505feb3.jpg">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231d1b18'/%3E%3Cpath d='M8 23 16 7l8 16M11 17h10' fill='none' stroke='%23c99a62' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='6' fill='%231d1b18'/%3E%3Cg fill='none' stroke='%23c99a62' stroke-width='2'%3E%3Ccircle cx='20' cy='20' r='14'/%3E%3Ccircle cx='20.6' cy='20.4' r='9.5'/%3E%3Ccircle cx='21.2' cy='20.8' r='5'/%3E%3Cpath d='M21.2 20.8 33.6 14.6'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -47,13 +47,14 @@
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-rings" viewBox="0 0 40 40"><g fill="none" stroke="currentColor"><circle cx="20" cy="20" r="17.5"/><circle cx="20.6" cy="20.4" r="13.1"/><circle cx="21.2" cy="20.8" r="8.7"/><circle cx="21.6" cy="21" r="4.5"/><path d="M21.6 21 37.4 13.2"/></g></symbol>
 </svg>
 
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
     <a href="./" class="brand" aria-label="Ąžuolo baldai — į pradžią">
-      <span class="brand__name">Ąžuolo baldai</span>
-      <span class="brand__sub">dirbtuvė · Kaunas</span>
+      <svg class="brand__mark" aria-hidden="true" focusable="false"><use href="#i-rings"/></svg>
+      <span class="brand__txt"><span class="brand__name">Ąžuolo baldai</span><span class="brand__sub">dirbtuvė · Kaunas</span></span>
     </a>
     <nav class="hdr__nav" aria-label="Pagrindinė navigacija">
       <a href="#gaminiai">Gaminiai</a>
@@ -234,6 +235,15 @@
     </div>
   </section>
 
+  <!-- JUOSTA: vienas didelis vaizdas, pertraukiantis puslapio ritmą -->
+  <section class="band" aria-label="Kaip gimsta baldas">
+    <img class="band__img" src="img/photo-1611021061285-16c871740efa-800.jpg" srcset="img/photo-1611021061285-16c871740efa-800.jpg 800w, img/photo-1611021061285-16c871740efa.jpg 1600w" sizes="100vw" width="1600" height="2400" loading="lazy" decoding="async" alt="Rankos, apibertos pjuvenomis, tekina medinę detalę">
+    <div class="wrap band__in">
+      <p class="band__text">Išmatuota vietoje.<br>Suprojektuota jums.<br><em>Pagaminta Kaune.</em></p>
+    </div>
+    <span class="band__tag">Iliustracinė nuotrauka</span>
+  </section>
+
   <!-- PROCESAS -->
   <section class="process" id="procesas" aria-labelledby="procesas-h">
     <div class="wrap process__grid">
@@ -241,9 +251,18 @@
         <p class="label label--light"><span class="label__n">02</span>Kaip dirbame</p>
         <h2 class="h2" id="procesas-h">Nuo pirmo pokalbio iki sumontuoto baldo</h2>
         <p>Tikslią kainą ir gamybos terminą galime pasakyti tik žinodami matmenis, medieną, apdailą ir furnitūrą. Todėl pirmiausia kalbamės ir matuojame, o tik tada skaičiuojame.</p>
-        <figure class="process__photo">
-          <img src="img/photo-1611021061285-16c871740efa-800.jpg" srcset="img/photo-1611021061285-16c871740efa-800.jpg 800w, img/photo-1611021061285-16c871740efa.jpg 1600w" sizes="(max-width: 899px) 60vw, 28vw" width="800" height="1200" loading="lazy" decoding="async" alt="Rankos, apibertos pjuvenomis, tekina medinę detalę">
-          <figcaption>Iliustracinė nuotrauka</figcaption>
+        <!-- staliaus sujungimo brėžinys – svetainės grafinis motyvas -->
+        <figure class="joint">
+          <svg viewBox="0 0 260 200" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-linejoin="round">
+              <path class="joint__line" d="M20 30H240V150H20Z"/>
+              <path class="joint__line" d="M240 72H214L202 106H160L148 72H118L106 106H64L52 72H20"/>
+              <path class="joint__grain" d="M30 42H230M30 52H150M168 52H230M30 62H96M110 62H230"/>
+              <path class="joint__grain" d="M38 114V142M84 112V142M132 114V142M180 112V142M224 114V142"/>
+              <path class="joint__dim" d="M20 172H240M20 166V178M240 166V178M64 106V122M106 106V122"/>
+            </g>
+          </svg>
+          <figcaption>Kregždės uodegos sujungimas · iliustracija</figcaption>
         </figure>
       </div>
       <ol class="steps">
@@ -399,6 +418,7 @@
         <p class="label"><span class="label__n">04</span>Klausimai</p>
         <h2 class="h2" id="klausimai-h">Prieš užsakant</h2>
         <p class="shead__text">Neradote atsakymo? Paskambinkite <a href="tel:+37060000000">+370 600 00000</a> arba parašykite <a href="mailto:info@azuolobaldai.lt">info@azuolobaldai.lt</a>.</p>
+        <svg class="rings-art" aria-hidden="true" focusable="false"><use href="#i-rings"/></svg>
       </header>
       <div class="faq__list">
         <details class="qa" id="k-eskizas">
@@ -525,7 +545,7 @@
 <footer class="ftr">
   <div class="wrap ftr__in">
     <div class="ftr__brand">
-      <span class="brand__name">Ąžuolo baldai</span>
+      <span class="ftr__logo"><svg class="brand__mark" aria-hidden="true" focusable="false"><use href="#i-rings"/></svg><span class="brand__name">Ąžuolo baldai</span></span>
       <p>Baldai pagal užsakymą. Dirbtuvė Kaune.</p>
     </div>
     <ul class="ftr__links">

@@ -216,7 +216,7 @@
   /* ---------- Atsiradimas slenkant: tik proceso žingsniai ir mozaikos nuotraukos, po vieną kartą ----------
      Kitas turinys sąmoningai nejuda. Elementai, kurie jau matomi įkėlus puslapį, nepaslepiami. */
   if (!reduceMotion() && "IntersectionObserver" in window) {
-    const els = $$(".step, .mosaic .m").filter((el) => el.getBoundingClientRect().top > window.innerHeight);
+    const els = $$(".step, .mosaic .m, .joint").filter((el) => el.getBoundingClientRect().top > window.innerHeight);
     els.forEach((el) => el.classList.add("rv"));
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });

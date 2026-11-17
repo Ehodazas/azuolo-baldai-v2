@@ -107,7 +107,7 @@ em { font-style: italic; }
 
 /* ---------- Mygtukai ---------- */
 .btn {
-  --b: var(--ink); --c: var(--paper);
+  --b: var(--oak-deep); --c: var(--paper);
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 52px; padding: 0 26px;
   background: var(--b); color: var(--c); border: 1px solid var(--b);
@@ -116,7 +116,7 @@ em { font-style: italic; }
   transition: background-color var(--t-quick) ease-out, color var(--t-quick) ease-out, border-color var(--t-quick) ease-out, transform .15s var(--ease-out);
 }
 .btn svg { width: 18px; height: 18px; transition: transform var(--t-hover) var(--ease-out); }
-.btn:hover { --b: var(--oak-deep); border-color: var(--oak-deep); }
+.btn:hover { --b: var(--ink); border-color: var(--ink); }
 .btn:hover svg { transform: translateX(4px); }
 .btn:active { transform: translateY(1px) scale(.985); }
 .btn:focus-visible { outline-offset: 4px; }
@@ -143,11 +143,12 @@ em { font-style: italic; }
 }
 .hdr.is-scrolled { border-bottom-color: var(--line); background: rgba(243, 238, 230, .86); box-shadow: 0 14px 30px -26px rgba(29, 27, 24, .45); }
 .hdr__in { display: flex; align-items: center; gap: 28px; height: var(--hdr); }
-.brand { display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; line-height: 1; margin-right: auto; }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; line-height: 1; margin-right: auto; color: var(--ink); }
+.brand__txt { display: flex; flex-direction: column; }
 .brand__name { font-family: var(--serif); font-size: 1.45rem; letter-spacing: -.01em; }
 .brand__sub { font-size: .66rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
-.hdr__nav { display: none; gap: 28px; }
-.hdr__nav a { position: relative; font-size: .92rem; text-decoration: none; padding: 6px 0; }
+.hdr__nav { display: none; gap: clamp(18px, 1.9vw, 28px); }
+.hdr__nav a { position: relative; font-size: .92rem; text-decoration: none; padding: 6px 0; white-space: nowrap; }
 .hdr__nav a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 1px; height: 1px; background: var(--oak);
   transform: scaleX(0); transform-origin: right center; transition: transform var(--t-hover) var(--ease-out);
@@ -156,7 +157,7 @@ em { font-style: italic; }
 .menu-btn { transition: background-color var(--t-quick), color var(--t-quick), transform .15s var(--ease-out); -webkit-tap-highlight-color: transparent; }
 .menu-btn:hover { background: var(--ink); color: var(--paper); }
 .menu-btn:active, .icon-btn:active { transform: scale(.96); }
-.hdr__tel { display: none; font-size: .92rem; text-decoration: none; font-variant-numeric: tabular-nums; }
+.hdr__tel { display: none; font-size: .92rem; text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .hdr__cta { display: none; }
 .menu-btn {
   min-height: 44px; padding: 0 16px; background: transparent; border: 1px solid var(--ink);
@@ -811,16 +812,12 @@ figcaption, .fig-tag {
 }
 .tool svg { width: 22px; height: 22px; }
 .tool:hover { color: var(--oak-deep); }
-.tool__label { display: none; font-size: .88rem; }
+.tool__label { display: none; } /* užrašai nerodomi: antraštėje kartu su meniu ir telefonu jiems neužtenka vietos; pavadinimas lieka aria-label */
 .tool__n {
   position: absolute; top: 5px; right: 3px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
   background: var(--ink); color: var(--paper); font-size: .68rem; font-weight: 600; line-height: 18px; text-align: center;
 }
 .tool__n:empty { display: none; }
-@media (min-width: 1400px) {
-  .tool__label { display: inline; }
-  .tool__n { position: static; }
-}
 
 /* Gaminių eilutės: veiksmai */
 .prow { display: grid; grid-template-columns: minmax(0, 1fr); }
@@ -984,3 +981,62 @@ figcaption, .fig-tag {
 }
 /* 320 px telefonuose antraštėje netelpa trys mygtukai: paieška pasiekiama per meniu */
 @media (max-width: 370px) { .tool[data-open-search] { display: none; } }
+
+/* =========================================================
+   Charakteris: rievių ženklas, sujungimo brėžinys, riešutmedžio
+   skiltis, didelė vaizdo juosta, mastelio akcentai, popieriaus tekstūra
+   ========================================================= */
+
+/* Logotipo ženklas – medžio rievės su įtrūkimu */
+.brand__mark { width: 34px; height: 34px; flex: none; color: var(--oak-deep); stroke-width: 1.4; }
+.ftr__logo { display: inline-flex; align-items: center; gap: 12px; }
+.ftr__logo .brand__mark { width: 40px; height: 40px; color: var(--oak-light); stroke-width: 1.2; }
+@media (max-width: 419px) { .brand { gap: 8px; } .brand__mark { width: 28px; height: 28px; } }
+@media (max-width: 359px) { .hdr .brand__mark { display: none; } } /* 320 px: vietos tik tekstui ir mygtukams */
+
+/* Didelės rievės kaip ramus akcentas tuščioje DUK kolonoje */
+.rings-art { display: none; }
+@media (min-width: 900px) {
+  .rings-art { display: block; width: 280px; height: 280px; max-width: 80%; margin-top: 32px; color: var(--oak); opacity: .32; stroke-width: .3; }
+}
+
+/* Sujungimo brėžinys darbo eigos skiltyje */
+.joint { margin: 18px 0 0; max-width: 360px; color: var(--oak-light); }
+.joint svg { width: 100%; height: auto; display: block; }
+.joint__line { stroke-width: 1.4; }
+.joint__grain { stroke-width: .8; opacity: .45; }
+.joint__dim { stroke-width: .8; opacity: .6; stroke-dasharray: 3 3; }
+.joint figcaption { position: static; background: none; padding: 10px 0 0; font-size: .78rem; letter-spacing: .04em; color: rgba(243, 238, 230, .65); }
+@media (prefers-reduced-motion: no-preference) {
+  /* brėžinys „nubraižomas“ vieną kartą, kai pasirodo ekrane */
+  .js .joint.rv .joint__line { stroke-dasharray: 900; stroke-dashoffset: 900; transition: stroke-dashoffset 1.4s var(--ease-out); }
+  .js .joint.rv.is-in .joint__line { stroke-dashoffset: 0; }
+}
+
+/* Riešutmedžio spalvos darbo eigos skiltis – kad dvi tamsios skiltys nebūtų vienodos */
+:root { --walnut: #3a2a1f; --walnut-2: #46332a; }
+.process { background: var(--walnut); }
+
+/* Didesni, kursyviniai žingsnių skaičiai */
+.step { grid-template-columns: 64px minmax(0, 1fr); }
+.step__n { font-style: italic; font-size: 3.2rem; line-height: .9; }
+.step::before { left: 14px; top: calc(26px + 3.4rem); }
+@media (min-width: 900px) {
+  .step { grid-template-columns: 104px minmax(0, 1fr); }
+  .step__n { font-size: 4.6rem; }
+  .step::before { left: 20px; top: calc(34px + 4.6rem); }
+}
+
+/* Didelė vaizdo juosta per visą ekrano plotį */
+.band { position: relative; min-height: clamp(340px, 62vh, 620px); display: grid; align-items: end; overflow: hidden; background: var(--ink); color: var(--paper); }
+.band__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20, 16, 12, .78) 0%, rgba(20, 16, 12, .45) 45%, rgba(20, 16, 12, .1) 100%); }
+.band__in { position: relative; z-index: 1; padding-top: 48px; padding-bottom: clamp(40px, 7vw, 88px); }
+.band__text { font-family: var(--serif); font-size: clamp(2.2rem, 1.3rem + 3.6vw, 4.6rem); line-height: 1.04; letter-spacing: -.02em; max-width: 14ch; }
+.band__text em { color: var(--oak-light); }
+.band__tag { position: absolute; right: 12px; bottom: 12px; z-index: 1; padding: 4px 9px; background: rgba(29, 27, 24, .66); color: var(--paper); font-size: .7rem; letter-spacing: .06em; }
+
+/* Labai švelni popieriaus tekstūra, kad smėlio spalva neatrodytų plokščia */
+body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}

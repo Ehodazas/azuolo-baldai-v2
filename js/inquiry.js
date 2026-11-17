@@ -191,9 +191,9 @@
     const tools = document.createElement("div");
     tools.className = "hdr__tools";
     tools.innerHTML =
-      `<button type="button" class="tool" data-open-search aria-label="Ieškoti gaminio"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="tool__label">Paieška</span></button>` +
-      `<button type="button" class="tool" data-open-drawer="favs"><svg aria-hidden="true"><use href="#i-heart"/></svg><span class="tool__label">Įsiminti</span><span class="tool__n" aria-hidden="true"></span></button>` +
-      `<button type="button" class="tool" data-open-drawer="basket"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="tool__label">Mano užklausa</span><span class="tool__n" aria-hidden="true"></span></button>`;
+      `<button type="button" class="tool" data-open-search aria-label="Ieškoti gaminio" title="Ieškoti gaminio"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="tool__label">Paieška</span></button>` +
+      `<button type="button" class="tool" data-open-drawer="favs" title="Įsiminti gaminiai"><svg aria-hidden="true"><use href="#i-heart"/></svg><span class="tool__label">Įsiminti</span><span class="tool__n" aria-hidden="true"></span></button>` +
+      `<button type="button" class="tool" data-open-drawer="basket" title="Mano užklausa"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="tool__label">Mano užklausa</span><span class="tool__n" aria-hidden="true"></span></button>`;
     const before = $(".hdr__cta", hdrIn) || $(".menu-btn", hdrIn);
     hdrIn.insertBefore(tools, before);
     [favBtn, bagBtn] = $$(".tool[data-open-drawer]", tools);
