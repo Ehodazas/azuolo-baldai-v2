@@ -71,4 +71,4 @@ Kaina rodoma tik kai `verified: true`. Formulės skaičiuoklei nėra, todėl ska
 social: { facebook: "https://www.facebook.com/...", instagram: "https://www.instagram.com/..." },
 ```
 
-Ikonos poraštėje atsiras tik su galiojančiu `https://` adresu atitinkamame domene. Tušti laukai – jokių ikonų.
+Ikonos poraštėje rodomos visada. Kol adresas tuščias, ikona nėra nuoroda (užvedus rodoma „Paskyra ruošiama“). Įrašius galiojantį `https://` adresą atitinkamame domene, ikona tampa nuoroda, atsidarančia naujame lange.

@@ -956,9 +956,10 @@ figcaption, .fig-tag {
 
 /* Socialiniai tinklai poraštėje (rodomi tik su tikrais adresais) */
 .ftr__social { display: flex; gap: 6px; margin-top: 14px; }
-.ftr__social a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-light); color: var(--paper); background: none; padding: 0; transition: border-color var(--t-quick), color var(--t-quick); }
+.ftr__social a, .ftr__social .is-soon { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-light); color: var(--paper); background: none; padding: 0; transition: border-color var(--t-quick), color var(--t-quick); }
 .ftr__social a:hover { border-color: var(--oak-light); color: var(--oak-light); }
 .ftr__social svg { width: 20px; height: 20px; }
+.ftr__social .is-soon { color: rgba(243, 238, 230, .72); cursor: default; } /* paskyra dar ruošiama: matoma, bet ne nuoroda */
 
 @media print {
   .hdr__tools, .prow__actions, .psearch, .toast, .drawer { display: none !important; }

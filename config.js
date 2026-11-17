@@ -11,7 +11,7 @@
    matomas kiekvienam lankytojui. Gavėjo el. paštas laikomas
    serverio aplinkos kintamuosiuose (žr. INTEGRACIJA.md).
    ========================================================= */
-/* social – tikri įmonės profilių adresai. Kol tušti, ikonos nerodomos.
+/* social – tikri įmonės profilių adresai. Kol tušti, ikonos rodomos be nuorodos („Paskyra ruošiama“).
    Pvz.: facebook: "https://www.facebook.com/jusu-puslapis" */
 window.AB_CONFIG = {
   formEndpoint: "",
