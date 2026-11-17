@@ -992,7 +992,7 @@ figcaption, .fig-tag {
 .ftr__logo { display: inline-flex; align-items: center; gap: 12px; }
 .ftr__logo .brand__mark { width: 40px; height: 40px; color: var(--oak-light); stroke-width: 1.2; }
 @media (max-width: 419px) { .brand { gap: 8px; } .brand__mark { width: 28px; height: 28px; } }
-@media (max-width: 359px) { .hdr .brand__mark { display: none; } } /* 320 px: vietos tik tekstui ir mygtukams */
+@media (max-width: 399px) { .hdr .brand__mark { display: none; } } /* siauri telefonai: antraštėje vietos tik tekstui ir mygtukams; ženklas lieka poraštėje */
 
 /* Didelės rievės kaip ramus akcentas tuščioje DUK kolonoje */
 .rings-art { display: none; }
@@ -1037,6 +1037,50 @@ figcaption, .fig-tag {
 .band__tag { position: absolute; right: 12px; bottom: 12px; z-index: 1; padding: 4px 9px; background: rgba(29, 27, 24, .66); color: var(--paper); font-size: .7rem; letter-spacing: .06em; }
 
 /* Labai švelni popieriaus tekstūra, kad smėlio spalva neatrodytų plokščia */
-body {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+:root {
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  --sand: #e7ddcd;
+}
+body { background-image: var(--noise); }
+
+/* =========================================================
+   Vidurio ritmas: skiltys pakaitomis šviesiame ir tamsesniame smėlio fone,
+   kainos veiksniai – kaip matavimo liniuotė (staliaus darbo įrankis)
+   ========================================================= */
+.gallery.section--tight { padding-top: clamp(56px, 8vw, 104px); background: var(--sand) var(--noise); }
+.gallery__head { border-top: 0; padding-top: 0; }
+.gallery .m { background: #ddd2c0; }
+.faq { padding-top: var(--sec); background: var(--sand) var(--noise); }
+.faq__grid { border-top: 0; padding-top: 0; }
+
+/* Liniuotė: telefone vertikali, kompiuteryje horizontali per visą plotį */
+.pricing__list {
+  grid-template-columns: 1fr; gap: 0; position: relative; padding-left: 34px;
+  background:
+    repeating-linear-gradient(180deg, var(--ink) 0 1px, transparent 1px 10px) left top / 9px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--ink) 0 1px, transparent 1px 50px) left top / 16px 100% no-repeat;
+  border-left: 1px solid var(--ink);
+}
+.pricing__list li { position: relative; border: 0; padding: 12px 0 14px; }
+.pricing__list li::before {
+  content: ""; position: absolute; left: -34px; top: 22px; width: 26px; height: 2px; background: var(--oak);
+}
+.pricing__list strong { font-size: 1.4rem; }
+@media (min-width: 900px) {
+  .pricing { grid-template-columns: 1fr; }
+  .pricing__cta { grid-column: auto; }
+  .pricing__list {
+    grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 18px; row-gap: 0;
+    padding: 34px 0 0; border-left: 0; border-top: 1px solid var(--ink);
+    background:
+      repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 12px) left top / 100% 9px no-repeat,
+      repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 60px) left top / 100% 16px no-repeat;
+  }
+  .pricing__list li { padding: 6px 0 0; border: 0; }
+  .pricing__list li::before { left: 0; top: -34px; width: 2px; height: 28px; }
+  .pricing__list strong { font-size: clamp(1.3rem, 1rem + .7vw, 1.65rem); }
+}
+@media (min-width: 1240px) {
+  .pricing { grid-template-columns: minmax(0, .7fr) minmax(0, 1.8fr); }
+  .pricing__cta { grid-column: 2; }
 }
