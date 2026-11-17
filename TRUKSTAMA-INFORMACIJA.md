@@ -34,14 +34,14 @@ Kai informacija bus, ją galima įrašyti į svetainę.
 | Pašalinta | Priežastis |
 |---|---|
 | Kainoraštis ir stalo skaičiuoklė | Kainos buvo išgalvotos |
-| Krepšelis | Svetainė nieko neparduoda, krepšelis apsimetė parduotuve |
+| Krepšelis kaip parduotuvėje (su kainomis) | Svetainė nieko neparduoda. Vėliau pridėtas užklausos krepšelis – jis renka gaminius vienai užklausai, be kainų ir apmokėjimo |
 | Paskyros langas | Neturi serverio ir nieko nedaro |
 | Atsiliepimai, įvertinimas 4,9/5, „180+ atsiliepimų“ | Išgalvoti |
 | „Nuo 2009 m.“, „1240 gaminių“, „98 %“ | Išgalvoti faktai |
 | 10 metų garantija, sertifikuoti miškai, nemokamas pristatymas, 40 % avansas | Nepatvirtinti pažadai |
 | Tiekėjų pavadinimai (Blum, Hettich ir kt.) | Nepatvirtinta, kad jie naudojami |
 | Projektų puslapiai ir filtrai | Projektai buvo iliustracinės nuotraukos, ne tikri darbai |
-| Mėgstami, palyginimas, paieška | Mažai naudos vieno puslapio svetainėje |
+| Projektų mėgstami ir paieška | Projektų nėra. Vėliau pridėti įsiminti gaminiai ir paieška pagal gaminių kategorijas |
 | Slapukų juosta | Svetainė savo slapukų neturi, žemėlapis įkeliamas tik paspaudus |
 | GSAP biblioteka | Nebereikalinga, judesys padarytas CSS priemonėmis |
 

@@ -846,17 +846,25 @@ figcaption, .fig-tag {
 @media (min-width: 900px) { .prow__actions { padding: 0 0 22px 72px; margin-top: -10px; } }
 
 /* Paieška tarp gaminių */
-.psearch { position: relative; display: flex; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--ink); }
-.psearch__i { position: absolute; left: 0; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+/* aiškiai matomas paieškos laukas su užrašu virš jo */
+.psearch { display: grid; gap: 8px; margin-bottom: 10px; scroll-margin-top: calc(var(--hdr) + 24px); }
+.psearch__label { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.psearch__field {
+  position: relative; display: flex; align-items: center;
+  background: #fbf8f3; border: 1px solid var(--paper-3);
+  transition: border-color var(--t-quick) ease-out, box-shadow var(--t-quick) ease-out;
+}
+.psearch__field:hover { border-color: var(--muted); }
+.psearch__field:focus-within { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(168, 116, 63, .25); }
+.psearch__i { position: absolute; left: 16px; width: 20px; height: 20px; color: var(--ink-2); pointer-events: none; }
 .psearch input {
-  flex: 1; min-width: 0; min-height: 52px; padding: 0 44px 0 32px; border: 0; background: transparent;
-  font-family: var(--serif); font-size: 1.2rem; color: var(--ink); -webkit-appearance: none; appearance: none;
+  flex: 1; min-width: 0; min-height: 54px; padding: 0 48px 0 48px; border: 0; background: transparent;
+  font-size: 1rem; color: var(--ink); -webkit-appearance: none; appearance: none;
 }
 .psearch input::-webkit-search-cancel-button { display: none; }
 .psearch input::placeholder { color: #8a8174; }
 .psearch input:focus { outline: none; }
-.psearch:focus-within { border-bottom-color: var(--oak); box-shadow: 0 1px 0 var(--oak); }
-.psearch__clear { position: absolute; right: 0; display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--ink-2); }
+.psearch__clear { position: absolute; right: 4px; display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--ink-2); }
 .psearch__clear[hidden] { display: none; }
 .psearch__clear svg { width: 18px; height: 18px; }
 .psearch__status { min-height: 1.4em; margin-bottom: 4px; font-size: .82rem; color: var(--muted); }
@@ -969,3 +977,5 @@ figcaption, .fig-tag {
   .menu-btn { padding: 0 11px; }
   .hdr__tools { gap: 0; }
 }
+/* 320 px telefonuose antraštėje netelpa trys mygtukai: paieška pasiekiama per meniu */
+@media (max-width: 370px) { .tool[data-open-search] { display: none; } }

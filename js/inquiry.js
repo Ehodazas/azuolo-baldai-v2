@@ -191,11 +191,12 @@
     const tools = document.createElement("div");
     tools.className = "hdr__tools";
     tools.innerHTML =
+      `<button type="button" class="tool" data-open-search aria-label="Ieškoti gaminio"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="tool__label">Paieška</span></button>` +
       `<button type="button" class="tool" data-open-drawer="favs"><svg aria-hidden="true"><use href="#i-heart"/></svg><span class="tool__label">Įsiminti</span><span class="tool__n" aria-hidden="true"></span></button>` +
       `<button type="button" class="tool" data-open-drawer="basket"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="tool__label">Mano užklausa</span><span class="tool__n" aria-hidden="true"></span></button>`;
     const before = $(".hdr__cta", hdrIn) || $(".menu-btn", hdrIn);
     hdrIn.insertBefore(tools, before);
-    [favBtn, bagBtn] = $$(".tool", tools);
+    [favBtn, bagBtn] = $$(".tool[data-open-drawer]", tools);
   }
   const bump = (el) => {
     if (!el || reduceMotion() || !el.animate) return;
@@ -268,8 +269,18 @@
       return;
     }
     const o = e.target.closest("[data-open-drawer]");
-    if (o) openDrawer(o.dataset.openDrawer);
+    if (o) { openDrawer(o.dataset.openDrawer); return; }
+    const srch = e.target.closest("[data-open-search]");
+    if (srch) { const dlg = srch.closest("dialog"); if (dlg && dlg.open) dlg.close(); focusSearch(true); }
   });
+  /* antraštės paieškos mygtukas: nuveda prie paieškos laukelio „Ką gaminame“ skiltyje */
+  function focusSearch(smooth) {
+    const input = $("#psearch");
+    if (!input) { location.href = "./#ieskoti"; return; }
+    const box = input.closest(".psearch");
+    box.scrollIntoView({ behavior: smooth && !reduceMotion() ? "smooth" : "auto", block: "center" });
+    setTimeout(() => input.focus({ preventScroll: true }), smooth && !reduceMotion() ? 500 : 0);
+  }
 
   /* ---------- Šoninis skydelis (dialog) ---------- */
   const drawer = document.createElement("dialog");
@@ -441,10 +452,13 @@
     const box = document.createElement("div");
     box.className = "psearch";
     box.setAttribute("role", "search");
-    box.innerHTML = `<label class="sr-only" for="psearch">Ieškoti tarp gaminių</label>
-      <svg aria-hidden="true" class="psearch__i"><use href="#i-search"/></svg>
-      <input id="psearch" type="search" autocomplete="off" placeholder="Ieškoti, pvz. komoda" aria-describedby="psearchStatus">
-      <button type="button" class="psearch__clear" aria-label="Išvalyti paiešką" hidden><svg aria-hidden="true"><use href="#i-close"/></svg></button>`;
+    box.id = "ieskoti";
+    box.innerHTML = `<label class="psearch__label" for="psearch">Ieškoti gaminio</label>
+      <div class="psearch__field">
+        <svg aria-hidden="true" class="psearch__i"><use href="#i-search"/></svg>
+        <input id="psearch" type="search" autocomplete="off" placeholder="pvz. komoda, sala, lova" aria-describedby="psearchStatus">
+        <button type="button" class="psearch__clear" aria-label="Išvalyti paiešką" hidden><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>`;
     const status = document.createElement("p");
     status.className = "psearch__status";
     status.id = "psearchStatus";
@@ -483,6 +497,8 @@
     input.addEventListener("input", run);
     input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { e.preventDefault(); input.value = ""; run(); } });
     clear.addEventListener("click", () => { input.value = ""; run(); input.focus(); });
+    /* atėjus iš kito puslapio per antraštės paiešką */
+    if (location.hash === "#ieskoti") window.addEventListener("load", () => setTimeout(() => focusSearch(false), 60));
   }
 
   /* ---------- Pradinis atvaizdavimas ---------- */
